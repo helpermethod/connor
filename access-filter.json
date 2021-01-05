@@ -1,0 +1,16 @@
+{
+  "rules": [
+    {
+      "excludeClasses": "org.apache.maven.surefire.**"
+    },
+    {
+      "excludeClasses": "org.junit.**"
+    },
+    {
+      "excludeClasses": "org.testcontainers.**"
+    },
+    {
+      "excludeClasses": "com.github.dockerjava.**"
+    }
+  ]
+}
