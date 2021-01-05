@@ -5,6 +5,7 @@ import org.testcontainers.containers.KafkaContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
+import picocli.CommandLine;
 
 @Testcontainers
 class KafkaConnectResetTest {
@@ -13,6 +14,6 @@ class KafkaConnectResetTest {
 
     @Test
     void test() {
-        var bootstrapServers = kafka.getBootstrapServers();
+        new CommandLine(new KafkaConnectReset()).execute("--bootstrap-servers", kafka.getBootstrapServers());
     }
 }

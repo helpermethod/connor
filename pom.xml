@@ -95,6 +95,7 @@
                             <imageName>kafka-connect-reset</imageName>
                             <buildArgs>
                                 <buildArg>--allow-incomplete-classpath</buildArg>
+                                <buildArg>--report-unsupported-elements-at-runtime</buildArg>
                             </buildArgs>
                         </configuration>
                     </execution>
