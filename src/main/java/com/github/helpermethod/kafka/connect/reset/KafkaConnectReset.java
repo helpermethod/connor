@@ -20,8 +20,9 @@ class KafkaConnectReset implements Callable<Integer> {
     public Integer call() {
         var consumer = new KafkaConsumer<>(Map.of(
             ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers,
-            ConsumerConfig.GROUP_ID_CONFIG, "connect-reset-" + new Random().nextInt(100000),
+            ConsumerConfig.GROUP_ID_CONFIG, "kafka-connect-reset-" + new Random().nextInt(100_000),
             ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false,
+            ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest",
             ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class,
             ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class
         ));
