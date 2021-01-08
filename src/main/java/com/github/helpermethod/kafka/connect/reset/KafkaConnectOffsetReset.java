@@ -1,5 +1,6 @@
 package com.github.helpermethod.kafka.connect.reset;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -29,7 +30,7 @@ class KafkaConnectOffsetReset implements Runnable {
             ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest"
         );
         var consumer = new KafkaConsumer<>(consumerConfig, new ByteArrayDeserializer(), new ByteArrayDeserializer());
-        var objectMapper = new ObjectMapper();
+        var objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         new OffsetResetter(consumer, objectMapper).reset(topic, connector);
     }
