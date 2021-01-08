@@ -11,12 +11,12 @@ import picocli.CommandLine;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
 @Testcontainers
-class KafkaConnectResetTest {
+class KafkaConnectOffsetResetTest {
     @Container
     KafkaContainer kafka = new KafkaContainer(DockerImageName.parse("confluentinc/cp-kafka:6.0.1"));
 
     @Test
     void test() {
-        new CommandLine(new KafkaConnectReset()).execute("--bootstrap-servers", kafka.getBootstrapServers());
+        new CommandLine(new KafkaConnectOffsetReset()).execute("--bootstrap-servers", kafka.getBootstrapServers());
     }
 }
