@@ -9,6 +9,7 @@ import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.Random;
 
@@ -32,7 +33,11 @@ class KafkaConnectOffsetReset implements Runnable {
         var consumer = new KafkaConsumer<>(consumerConfig, new ByteArrayDeserializer(), new ByteArrayDeserializer());
         var objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-        new OffsetResetter(consumer, objectMapper).reset(topic, connector);
+        try {
+            new OffsetResetter(consumer, null, objectMapper).reset(topic, connector);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void main(String[] args) {

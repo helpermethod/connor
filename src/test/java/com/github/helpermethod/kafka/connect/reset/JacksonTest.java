@@ -11,11 +11,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class JacksonTest {
-    @Test
-    public void should_map_array_elements_to_fields() throws JsonProcessingException {
-        var objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        var key = objectMapper.readValue("[\"jdbc-source\", {}]", Key.class);
 
-        assertThat(key.connector).isEqualTo("jdbc-source");
-    }
+	@Test
+	public void should_map_array_elements_to_fields() throws JsonProcessingException {
+		var objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		var key = objectMapper.readValue("[\"jdbc-source\", {}]", Key.class);
+
+		assertThat(key.connector).isEqualTo("jdbc-source");
+	}
+
 }
