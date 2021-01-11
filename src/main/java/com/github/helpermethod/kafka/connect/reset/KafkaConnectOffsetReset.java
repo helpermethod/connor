@@ -4,7 +4,11 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.ByteArrayDeserializer;
+import org.apache.kafka.common.serialization.ByteArraySerializer;
+import org.apache.kafka.common.serialization.BytesSerializer;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -31,10 +35,14 @@ class KafkaConnectOffsetReset implements Runnable {
             ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest"
         );
         var consumer = new KafkaConsumer<>(consumerConfig, new ByteArrayDeserializer(), new ByteArrayDeserializer());
+        Map<String, Object> producerConfig = Map.of(
+            ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers
+        );
+        var producer = new KafkaProducer<>(producerConfig, new ByteArraySerializer(), new ByteArraySerializer());
         var objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         try {
-            new OffsetResetter(consumer, null, objectMapper).reset(topic, connector);
+            new OffsetResetter(consumer, producer, objectMapper).reset(topic, connector);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

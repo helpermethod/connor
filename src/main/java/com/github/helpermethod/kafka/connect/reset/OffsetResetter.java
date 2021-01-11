@@ -22,18 +22,18 @@ class OffsetResetter {
     }
 
     void reset(String topic, String connector) throws IOException {
-        try (consumer) {
+        try (consumer; producer) {
             consumer.subscribe(List.of(topic));
 
-            outer:
             while (true) {
                 var records = consumer.poll(Duration.ofMillis(100));
 
                 for (var record : records) {
                     if (objectMapper.readValue(record.key(), Key.class).connector.equals(connector)) {
-                        producer.send(new ProducerRecord<>(topic, record.partition(), record.key(), null));
+                        var tombstone = new ProducerRecord<byte[], byte[]>(topic, record.partition(), record.key(), null);
+                        producer.send(tombstone);
 
-                        break outer;
+                        return;
                     }
                 }
             }
