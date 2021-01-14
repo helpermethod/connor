@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 
-
 class OffsetResetter {
     private final KafkaConsumer<byte[], byte[]> consumer;
     private final KafkaProducer<byte[], byte[]> producer;
@@ -28,15 +27,22 @@ class OffsetResetter {
             while (true) {
                 var records = consumer.poll(Duration.ofMillis(100));
 
+                if (records.isEmpty()) {
+                    return;
+                }
+
                 for (var record : records) {
                     if (objectMapper.readValue(record.key(), Key.class).connector.equals(connector)) {
-                        var tombstone = new ProducerRecord<byte[], byte[]>(topic, record.partition(), record.key(), null);
-                        producer.send(tombstone);
+                        sendTombstone(topic, record.partition(), record.key());
 
                         return;
                     }
                 }
             }
         }
+    }
+
+    private void sendTombstone(String topic, Integer partition, byte[] key) {
+        producer.send(new ProducerRecord<>(topic, partition, key, null));
     }
 }
