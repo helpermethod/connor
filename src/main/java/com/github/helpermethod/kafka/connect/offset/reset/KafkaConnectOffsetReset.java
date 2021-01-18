@@ -1,14 +1,14 @@
-package com.github.helpermethod.kafka.connect.reset;
+package com.github.helpermethod.kafka.connect.offset.reset;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.ByteArrayDeserializer;
 import org.apache.kafka.common.serialization.ByteArraySerializer;
-import org.apache.kafka.common.serialization.BytesSerializer;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Random;
 
-@Command(name = "kafka-connect-reset", mixinStandardHelpOptions = true)
+@Command(name = "kafka-connect-offset-reset", mixinStandardHelpOptions = true)
 public class KafkaConnectOffsetReset implements Runnable {
     @Option(names = {"-b", "--bootstrap-servers"}, required = true, description = "The servers to connect to")
     private String bootstrapServers;
@@ -47,15 +47,13 @@ public class KafkaConnectOffsetReset implements Runnable {
     }
 
     private KafkaProducer<byte[], byte[]> createProducer() {
-        Map<String, Object> producerConfig = Map.of(
-            ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers
-        );
+        Map<String, Object> producerConfig = Map.of(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
 
         return new KafkaProducer<>(producerConfig, new ByteArraySerializer(), new ByteArraySerializer());
     }
 
     private ObjectMapper createObjectMapper() {
-        return new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        return JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
     }
 
     public static void main(String[] args) {

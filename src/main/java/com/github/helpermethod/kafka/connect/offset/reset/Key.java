@@ -1,4 +1,4 @@
-package com.github.helpermethod.kafka.connect.reset;
+package com.github.helpermethod.kafka.connect.offset.reset;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;

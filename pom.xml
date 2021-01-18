@@ -102,7 +102,7 @@
                         </goals>
                         <phase>package</phase>
                         <configuration>
-                            <mainClass>com.github.helpermethod.kafka.connect.reset.KafkaConnectOffsetReset</mainClass>
+                            <mainClass>com.github.helpermethod.kafka.connect.offset.reset.KafkaConnectOffsetReset</mainClass>
                             <imageName>kafka-connect-reset</imageName>
                             <buildArgs>
                                 <buildArg>--allow-incomplete-classpath</buildArg>
