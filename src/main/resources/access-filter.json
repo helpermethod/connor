@@ -19,6 +19,12 @@
       "excludeClasses": "com.github.dockerjava.**"
     },
     {
+      "excludeClasses": "com.sun.jna.**"
+    },
+    {
+      "excludeClasses": "com.github.helpermethod.kafka.connect.offset.reset.JacksonTest"
+    },
+    {
       "excludeClasses": "com.github.helpermethod.kafka.connect.offset.reset.KafkaConnectOffsetResetTest"
     },
     {
