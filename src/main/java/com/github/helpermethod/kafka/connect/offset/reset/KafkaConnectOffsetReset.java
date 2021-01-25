@@ -16,21 +16,23 @@ import picocli.CommandLine.Option;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
 
-@Command(name = "kafka-connect-offset-reset", mixinStandardHelpOptions = true)
+@Command(name = "kafka-connect-offset-reset", mixinStandardHelpOptions = true, version = "0.1.0")
 public class KafkaConnectOffsetReset implements Runnable {
-    @Option(names = {"-b", "--bootstrap-servers"}, required = true, description = "The servers to connect to")
+    @Option(names = {"-b", "--bootstrap-servers"}, required = true, description = "The servers to connect to.")
     private String bootstrapServers;
-    @Option(names = {"-t", "--topic"}, required = true, description = "The topic where Kafka Connect stores Source Connector offsets")
+    @Option(names = {"-o", "--offsets-topic"}, required = true, description = "The topic where Kafka Connect stores Source Connector offsets.")
     private String topic;
-    @Option(names = {"-c", "--connector"}, required = true, description = "The source connector to reset")
+    @Option(names = {"-c", "--connector"}, required = true, description = "The source connector to reset.")
     private String connector;
 
     @Override
     public void run() {
         try {
             new OffsetResetter(createConsumer(), createProducer(), createObjectMapper()).reset(topic, connector);
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException | ExecutionException | TimeoutException e) {
             throw new RuntimeException(e);
         }
     }

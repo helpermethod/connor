@@ -94,7 +94,7 @@
             <plugin>
                 <groupId>org.graalvm.nativeimage</groupId>
                 <artifactId>native-image-maven-plugin</artifactId>
-                <version>20.3.0</version>
+                <version>21.0.0</version>
                 <executions>
                     <execution>
                         <goals>
@@ -103,10 +103,9 @@
                         <phase>package</phase>
                         <configuration>
                             <mainClass>com.github.helpermethod.kafka.connect.offset.reset.KafkaConnectOffsetReset</mainClass>
-                            <imageName>kafka-connect-reset</imageName>
+                            <imageName>kafka-connect-offset-reset</imageName>
                             <buildArgs>
                                 <buildArg>--allow-incomplete-classpath</buildArg>
-                                <buildArg>--report-unsupported-elements-at-runtime</buildArg>
                             </buildArgs>
                         </configuration>
                     </execution>

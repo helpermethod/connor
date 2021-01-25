@@ -7,10 +7,22 @@
       "excludeClasses": "org.junit.**"
     },
     {
+      "excludeClasses": "org.apiguardian.**"
+    },
+    {
+      "excludeClasses": "org.assertj.**"
+    },
+    {
       "excludeClasses": "org.testcontainers.**"
     },
     {
       "excludeClasses": "com.github.dockerjava.**"
+    },
+    {
+      "excludeClasses": "com.github.helpermethod.kafka.connect.offset.reset.KafkaConnectOffsetResetTest"
+    },
+    {
+      "excludeClasses": "org.graalvm.compiler.hotspot.management.AggregatedMemoryPoolBean"
     }
   ]
 }
