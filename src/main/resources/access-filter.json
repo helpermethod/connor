@@ -26,9 +26,6 @@
     },
     {
       "excludeClasses": "com.github.helpermethod.kafka.connect.offset.reset.KafkaConnectOffsetResetTest"
-    },
-    {
-      "excludeClasses": "org.graalvm.compiler.hotspot.management.AggregatedMemoryPoolBean"
     }
   ]
 }
