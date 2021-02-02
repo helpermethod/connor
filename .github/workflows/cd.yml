@@ -10,6 +10,7 @@ jobs:
           path: ~/repository/m2
           key: ${{runner.os}}-${{hashFiles('pom.xml')}}
       - uses: DeLaGuardo/setup-graalvm@3.1
-        with: graalvm-version: 21.0.0.java11
+        with: 
+          graalvm-version: 21.0.0.java11
       - run: gu install native-image
       - run: ./mvnw package
