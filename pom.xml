@@ -105,9 +105,6 @@
                         <configuration>
                             <mainClass>com.github.helpermethod.kafka.connect.offset.reset.KafkaConnectOffsetReset</mainClass>
                             <imageName>kafka-connect-offset-reset</imageName>
-                            <buildArgs>
-                                <buildArg>-H:+AllowIncompleteClasspath</buildArg>
-                            </buildArgs>
                         </configuration>
                     </execution>
                 </executions>
