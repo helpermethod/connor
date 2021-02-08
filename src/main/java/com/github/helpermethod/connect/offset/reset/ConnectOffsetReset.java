@@ -1,4 +1,4 @@
-package com.github.helpermethod.kafka.connect.offset.reset;
+package com.github.helpermethod.connect.offset.reset;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,8 +19,8 @@ import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
-@Command(name = "kafka-connect-offset-reset", mixinStandardHelpOptions = true, version = "0.1.0")
-public class KafkaConnectOffsetReset implements Runnable {
+@Command(name = "connect-offset-reset", mixinStandardHelpOptions = true, version = "0.1.0")
+public class ConnectOffsetReset implements Runnable {
     @Option(names = {"-b", "--bootstrap-servers"}, required = true, description = "The servers to connect to.")
     private String bootstrapServers;
     @Option(names = {"-o", "--offsets-topic"}, required = true, description = "The topic where Kafka Connect stores Source Connector offsets.")
@@ -59,6 +59,6 @@ public class KafkaConnectOffsetReset implements Runnable {
     }
 
     public static void main(String[] args) {
-        System.exit(new CommandLine(new KafkaConnectOffsetReset()).execute(args));
+        System.exit(new CommandLine(new ConnectOffsetReset()).execute(args));
     }
 }

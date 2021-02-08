@@ -1,4 +1,4 @@
-package com.github.helpermethod.kafka.connect.offset.reset;
+package com.github.helpermethod.connect.offset.reset;
 
 import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.AdminClientConfig;
@@ -32,7 +32,7 @@ import static org.testcontainers.utility.DockerImageName.parse;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
 @Testcontainers
-class KafkaConnectOffsetResetTest {
+class ConnectOffsetResetTest {
     static final String CONNECT_OFFSETS = "connect-offsets";
 
     @Container
@@ -50,7 +50,7 @@ class KafkaConnectOffsetResetTest {
                 .send(new ProducerRecord<>(CONNECT_OFFSETS, "[\"jdbc-source\", {}]", "{}"))
                 .get(1, SECONDS);
 
-        new CommandLine(new KafkaConnectOffsetReset())
+        new CommandLine(new ConnectOffsetReset())
             .execute(
                 "--bootstrap-servers", kafka.getBootstrapServers(),
                 "--offsets-topic", CONNECT_OFFSETS,

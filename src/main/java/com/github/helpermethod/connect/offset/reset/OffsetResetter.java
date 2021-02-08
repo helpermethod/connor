@@ -1,4 +1,4 @@
-package com.github.helpermethod.kafka.connect.offset.reset;
+package com.github.helpermethod.connect.offset.reset;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.consumer.KafkaConsumer;

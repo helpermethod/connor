@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.helpermethod</groupId>
-    <artifactId>kafka-connect-offset-reset</artifactId>
+    <artifactId>connect-offset-reset</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <properties>
@@ -103,7 +103,7 @@
                         </goals>
                         <phase>package</phase>
                         <configuration>
-                            <mainClass>com.github.helpermethod.kafka.connect.offset.reset.KafkaConnectOffsetReset</mainClass>
+                            <mainClass>com.github.helpermethod.connect.offset.reset.ConnectOffsetReset</mainClass>
                             <imageName>kafka-connect-offset-reset</imageName>
                         </configuration>
                     </execution>
