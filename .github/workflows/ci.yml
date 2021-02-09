@@ -17,4 +17,4 @@ jobs:
         with: 
           graalvm-version: 21.0.0.java11
       - run: gu install native-image
-      - run: ./mvnw package
+      - run: ./mvnw -B package
