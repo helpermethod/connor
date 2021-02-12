@@ -18,3 +18,4 @@ jobs:
           graalvm-version: 21.0.0.java11
       - run: gu install native-image
       - run: ./mvnw -B package
+      - uses: codecov/codecov-action@v1
