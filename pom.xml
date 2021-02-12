@@ -89,9 +89,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.2</version>
                 <configuration>
-                    <argLine>
-                        -agentlib:native-image-agent=access-filter-file=target/classes/access-filter.json,config-output-dir=target/classes/META-INF/native-image
-                    </argLine>
+                  <argLine>-agentlib:native-image-agent=access-filter-file=target/classes/access-filter.json,config-output-dir=target/classes/META-INF/native-image ${argLine}</argLine>
                 </configuration>
             </plugin>
             <plugin>
@@ -128,6 +126,7 @@
                             <imageName>kafka-connect-offset-reset</imageName>
                             <buildArgs>
                                 <buildArg>-H:+AllowIncompleteClasspath</buildArg>
+                                <buildArg>--initialize-at-build-time=sun.instrument.InstrumentationImpl</buildArg>
                             </buildArgs>
                         </configuration>
                     </execution>

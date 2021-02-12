@@ -22,13 +22,19 @@
       "excludeClasses": "com.sun.jna.**"
     },
     {
+      "excludeClasses": "org.jacoco.**"
+    },
+    {
+      "excludeClasses": "java.lang.$JaCoCo"
+    },
+    {
+      "excludeClasses": "org.graalvm.compiler.hotspot.management.AggregatedMemoryPoolBean"
+    },
+    {
       "excludeClasses": "com.github.helpermethod.connect.offset.reset.JacksonTest"
     },
     {
       "excludeClasses": "com.github.helpermethod.connect.offset.reset.ConnectOffsetResetTest"
-    },
-    {
-      "excludeClasses": "org.graalvm.compiler.hotspot.management.AggregatedMemoryPoolBean"
     }
   ]
 }
