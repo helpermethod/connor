@@ -22,10 +22,13 @@
       "excludeClasses": "com.sun.jna.**"
     },
     {
-      "excludeClasses": "com.github.helpermethod.kafka.connect.offset.reset.JacksonTest"
+      "excludeClasses": "com.github.helpermethod.connect.offset.reset.JacksonTest"
     },
     {
-      "excludeClasses": "com.github.helpermethod.kafka.connect.offset.reset.KafkaConnectOffsetResetTest"
+      "excludeClasses": "com.github.helpermethod.connect.offset.reset.ConnectOffsetResetTest"
+    },
+    {
+      "excludeClasses": "org.graalvm.compiler.hotspot.management.AggregatedMemoryPoolBean"
     }
   ]
 }
