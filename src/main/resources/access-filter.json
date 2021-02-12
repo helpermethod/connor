@@ -22,12 +22,6 @@
       "excludeClasses": "com.sun.jna.**"
     },
     {
-      "excludeClasses": "org.jacoco.**"
-    },
-    {
-      "excludeClasses": "java.lang.$JaCoCo"
-    },
-    {
       "excludeClasses": "org.graalvm.compiler.hotspot.management.AggregatedMemoryPoolBean"
     },
     {
