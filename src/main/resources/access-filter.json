@@ -22,6 +22,9 @@
       "excludeClasses": "com.sun.jna.**"
     },
     {
+      "excludeClasses": "ch.qos.logback.**"
+    },
+    {
       "excludeClasses": "org.graalvm.compiler.hotspot.management.AggregatedMemoryPoolBean"
     },
     {
