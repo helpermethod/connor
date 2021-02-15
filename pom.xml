@@ -10,6 +10,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>11</maven.compiler.release>
         <picocli.version>4.6.1</picocli.version>
+        <jacoco.version>0.8.6</jacoco.version>
     </properties>
 
     <dependencyManagement>
@@ -66,9 +67,9 @@
         <dependency>
             <groupId>org.jacoco</groupId>
             <artifactId>org.jacoco.agent</artifactId>
+            <version>${jacoco.version}</version>
             <classifier>runtime</classifier>
             <scope>test</scope>
-            <version>0.8.6</version>
         </dependency>
     </dependencies>
 
@@ -99,27 +100,30 @@
                     <argLine>
                         -agentlib:native-image-agent=access-filter-file=target/classes/access-filter.json,config-output-dir=target/classes/META-INF/native-image
                     </argLine>
+                    <systemPropertyVariables>
+                        <jacoco-agent.destfile>${project.build.directory}/jacoco.exec</jacoco-agent.destfile>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.6</version>
+                <version>${jacoco.version}</version>
                 <executions>
                     <execution>
-                        <id>instrument</id>
+                        <id>default-instrument</id>
                         <goals>
                             <goal>instrument</goal>
                         </goals>
                     </execution>
                     <execution>
-                        <id>restore</id>
+                        <id>default-restore</id>
                         <goals>
                             <goal>restore-instrumented-classes</goal>
                         </goals>
                     </execution>
                     <execution>
-                        <id>report</id>
+                        <id>default-report</id>
                         <goals>
                             <goal>report</goal>
                         </goals>
