@@ -41,7 +41,7 @@ class ConnectOffsetResetTest {
             .withEnv("KAFKA_AUTO_CREATE_TOPICS_ENABLE", "false");
 
     @Test
-    void should_send_tombstone_to_the_correct_partition() throws InterruptedException, ExecutionException, TimeoutException {
+    void should_send_a_tombstone_to_the_correct_partition() throws InterruptedException, ExecutionException, TimeoutException {
         createConnectOffsetsTopic();
 
         var producer = createProducer();

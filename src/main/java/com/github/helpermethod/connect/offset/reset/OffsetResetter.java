@@ -1,8 +1,8 @@
 package com.github.helpermethod.connect.offset.reset;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.consumer.Consumer;
+import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 
@@ -15,11 +15,11 @@ import java.util.concurrent.TimeoutException;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 class OffsetResetter {
-    private final KafkaConsumer<byte[], byte[]> consumer;
-    private final KafkaProducer<byte[], byte[]> producer;
-    private final ObjectMapper objectMapper;
+    private final Consumer<byte[], byte[]> consumer;
+    private final Producer<byte[], byte[]> producer;
+    private final ConnectOffsetMapper objectMapper;
 
-    OffsetResetter(KafkaConsumer<byte[], byte[]> consumer, KafkaProducer<byte[], byte[]> producer, ObjectMapper objectMapper) {
+    OffsetResetter(Consumer<byte[], byte[]> consumer, Producer<byte[], byte[]> producer, ConnectOffsetMapper objectMapper) {
         this.consumer = consumer;
         this.producer = producer;
         this.objectMapper = objectMapper;
@@ -38,7 +38,7 @@ class OffsetResetter {
 
                 for (var record : records) {
                     if (objectMapper.readValue(record.key(), Key.class).connector.equals(connector)) {
-                        var metadata = sendTombstone(topic, record.partition(), record.key());
+                        sendTombstone(topic, record.partition(), record.key());
 
                         return;
                     }

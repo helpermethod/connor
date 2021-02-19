@@ -1,8 +1,5 @@
 package com.github.helpermethod.connect.offset.reset;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.json.JsonMapper;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -21,17 +18,17 @@ import java.util.concurrent.TimeoutException;
 
 @Command(name = "connect-offset-reset", mixinStandardHelpOptions = true, version = "0.1.0")
 public class ConnectOffsetReset implements Runnable {
-    @Option(names = {"-b", "--bootstrap-servers"}, required = true, description = "The servers to connect to.")
+    @Option(names = {"-b", "--bootstrap-servers"}, required = true, description = "A comma-separated list of broker urls.")
     private String bootstrapServers;
-    @Option(names = {"-o", "--offsets-topic"}, required = true, description = "The topic where Kafka Connect stores Source Connector offsets.")
+    @Option(names = {"-o", "--offsets-topic"}, required = true, description = "The topic where Kafka Connect stores its Source Connector offsets.")
     private String topic;
-    @Option(names = {"-c", "--connector"}, required = true, description = "The source connector to reset.")
+    @Option(names = {"-c", "--connector"}, required = true, description = "The source connector for which to reset the offset.")
     private String connector;
 
     @Override
     public void run() {
         try {
-            new OffsetResetter(createConsumer(), createProducer(), createObjectMapper()).reset(topic, connector);
+            new OffsetResetter(createConsumer(), createProducer(), new ConnectOffsetMapper()).reset(topic, connector);
         } catch (IOException | InterruptedException | ExecutionException | TimeoutException e) {
             throw new RuntimeException(e);
         }
@@ -52,10 +49,6 @@ public class ConnectOffsetReset implements Runnable {
         Map<String, Object> producerConfig = Map.of(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
 
         return new KafkaProducer<>(producerConfig, new ByteArraySerializer(), new ByteArraySerializer());
-    }
-
-    private ObjectMapper createObjectMapper() {
-        return JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
     }
 
     public static void main(String[] args) {
