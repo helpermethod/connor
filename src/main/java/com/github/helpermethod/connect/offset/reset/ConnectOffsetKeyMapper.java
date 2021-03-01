@@ -8,14 +8,14 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 
 import java.io.IOException;
 
-class ConnectOffsetMapper {
+class ConnectOffsetKeyMapper {
     private final ObjectMapper objectMapper;
 
-    ConnectOffsetMapper() {
+    ConnectOffsetKeyMapper() {
         objectMapper = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
     }
 
-    public <T> T readValue(byte[] src, Class<T> valueType) throws IOException, JsonParseException, JsonMappingException {
-        return objectMapper.readValue(src, valueType);
+    Key map(byte[] src) throws IOException, JsonParseException, JsonMappingException {
+        return objectMapper.readValue(src, Key.class);
     }
 }

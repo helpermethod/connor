@@ -17,11 +17,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayNameGeneration(ReplaceUnderscores.class)
 public class OffsetResetterTest {
     @Test
-    void should_not_send_a_tombstone_if_no_offset_was_found() throws InterruptedException, ExecutionException, TimeoutException, IOException {
+    void should_not_send_a_tombstone_when_no_offset_was_found() throws InterruptedException, ExecutionException, TimeoutException, IOException {
         var consumer = new MockConsumer<byte[], byte[]>(OffsetResetStrategy.EARLIEST);
         var producer = new MockProducer<>(true, new ByteArraySerializer(), new ByteArraySerializer());
 
-        new OffsetResetter(consumer, producer, new ConnectOffsetMapper()).reset("connect-offsets", "jdbc-source");
+        new OffsetResetter(consumer, producer, new ConnectOffsetKeyMapper()).reset("connect-offsets", "jdbc-source");
 
         assertThat(producer.history()).isEmpty();
     }

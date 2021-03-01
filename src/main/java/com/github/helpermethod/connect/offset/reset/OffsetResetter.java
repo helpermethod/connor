@@ -3,7 +3,6 @@ package com.github.helpermethod.connect.offset.reset;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.clients.producer.RecordMetadata;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -16,12 +15,12 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 class OffsetResetter {
     private final Consumer<byte[], byte[]> consumer;
     private final Producer<byte[], byte[]> producer;
-    private final ConnectOffsetMapper objectMapper;
+    private final ConnectOffsetKeyMapper connectOffsetKeyMapper;
 
-    OffsetResetter(Consumer<byte[], byte[]> consumer, Producer<byte[], byte[]> producer, ConnectOffsetMapper objectMapper) {
+    OffsetResetter(Consumer<byte[], byte[]> consumer, Producer<byte[], byte[]> producer, ConnectOffsetKeyMapper connectOffsetKeyMapper) {
         this.consumer = consumer;
         this.producer = producer;
-        this.objectMapper = objectMapper;
+        this.connectOffsetKeyMapper = connectOffsetKeyMapper;
     }
 
     void reset(String topic, String connector) throws IOException, InterruptedException, ExecutionException, TimeoutException {
@@ -36,7 +35,7 @@ class OffsetResetter {
                 }
 
                 for (var record : records) {
-                    if (objectMapper.readValue(record.key(), Key.class).connector.equals(connector)) {
+                    if (connectOffsetKeyMapper.map(record.key()).connector.equals(connector)) {
                         sendTombstone(topic, record.partition(), record.key());
 
                         return;
@@ -46,7 +45,7 @@ class OffsetResetter {
         }
     }
 
-    private RecordMetadata sendTombstone(String topic, Integer partition, byte[] key) throws InterruptedException, ExecutionException, TimeoutException {
-        return producer.send(new ProducerRecord<>(topic, partition, key, null)).get(1, SECONDS);
+    private void sendTombstone(String topic, Integer partition, byte[] key) throws InterruptedException, ExecutionException, TimeoutException {
+        producer.send(new ProducerRecord<>(topic, partition, key, null)).get(1, SECONDS);
     }
 }
