@@ -69,13 +69,13 @@ class ConnectOffsetResetTest {
     }
 
     private KafkaProducer<String, String> createProducer() {
-        Map<String, Object> producerConfig = Map.of(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafka.getBootstrapServers());
+        var producerConfig = Map.<String, Object>of(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafka.getBootstrapServers());
 
         return new KafkaProducer<>(producerConfig, new StringSerializer(), new StringSerializer());
     }
 
     private KafkaConsumer<String, String> createConnectOffsetsConsumer() {
-        Map<String, Object> consumerConfig = Map.of(
+        var consumerConfig = Map.<String, Object>of(
             ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafka.getBootstrapServers(),
             ConsumerConfig.GROUP_ID_CONFIG, "test",
             ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest"

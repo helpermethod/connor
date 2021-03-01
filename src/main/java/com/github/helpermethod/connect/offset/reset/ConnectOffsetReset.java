@@ -35,7 +35,7 @@ public class ConnectOffsetReset implements Runnable {
     }
 
     private KafkaConsumer<byte[], byte[]> createConsumer() {
-        Map<String, Object> consumerConfig = Map.of(
+        var consumerConfig = Map.<String, Object>of(
             ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers,
             ConsumerConfig.GROUP_ID_CONFIG, "kafka-connect-offset-reset-" + new Random().nextInt(100_000),
             ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false,
@@ -46,7 +46,7 @@ public class ConnectOffsetReset implements Runnable {
     }
 
     private KafkaProducer<byte[], byte[]> createProducer() {
-        Map<String, Object> producerConfig = Map.of(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        var producerConfig = Map.<String, Object>of(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
 
         return new KafkaProducer<>(producerConfig, new ByteArraySerializer(), new ByteArraySerializer());
     }
