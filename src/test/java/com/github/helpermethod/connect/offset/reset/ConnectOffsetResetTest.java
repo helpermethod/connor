@@ -80,7 +80,6 @@ class ConnectOffsetResetTest {
             ConsumerConfig.GROUP_ID_CONFIG, "test",
             ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest"
         );
-
         var consumer = new KafkaConsumer<>(consumerConfig, new StringDeserializer(), new StringDeserializer());
         consumer.subscribe(List.of(CONNECT_OFFSETS));
 

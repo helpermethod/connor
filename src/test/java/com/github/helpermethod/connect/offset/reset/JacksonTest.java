@@ -10,9 +10,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
-public class JacksonTest {
+class JacksonTest {
 	@Test
-	public void should_map_array_elements_to_fields() throws IOException {
+	void should_map_array_elements_to_fields() throws IOException {
 		var connectOffsetKeyMapper = new ConnectOffsetKeyMapper();
 		var key = connectOffsetKeyMapper.map("[\"jdbc-source\", {}]".getBytes(UTF_8));
 

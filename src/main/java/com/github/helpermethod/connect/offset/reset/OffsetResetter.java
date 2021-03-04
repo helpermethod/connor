@@ -30,8 +30,6 @@ class OffsetResetter {
             while (true) {
                 var records = consumer.poll(Duration.ofSeconds(5));
 
-                System.out.println(records.count());
-
                 if (records.isEmpty()) {
                     return;
                 }
