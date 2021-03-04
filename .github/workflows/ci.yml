@@ -6,16 +6,16 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2 
+      - uses: actions/checkout@v2
+      - uses: DeLaGuardo/setup-graalvm@3.1
+        with:
+          graalvm-version: 21.0.0.java11
+      - run: gu install native-image
       - uses: actions/cache@v2
         with:
           path: ~/.m2/repository
           key: mvn-${{hashFiles('pom.xml')}}
           restore-keys: |
             mvn-
-      - uses: DeLaGuardo/setup-graalvm@3.1
-        with: 
-          graalvm-version: 21.0.0.java11
-      - run: gu install native-image
       - run: ./mvnw -B verify
       - uses: codecov/codecov-action@v1
