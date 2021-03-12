@@ -53,7 +53,7 @@ class ConnectOffsetResetTest {
         new CommandLine(new ConnectOffsetReset())
             .execute(
                 "--bootstrap-servers", kafka.getBootstrapServers(),
-                "--offsets-topic", CONNECT_OFFSETS,
+                "--topic", CONNECT_OFFSETS,
                 "--connector", "jdbc-source"
             );
 
