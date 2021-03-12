@@ -15,6 +15,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -44,13 +45,16 @@ class OffsetResetterTest {
 
     @MethodSource("consumerRecords")
     @ParameterizedTest
-    void should_send_a_tombstone_to_the_correct_partition_if_an_offset_was_found(Map<TopicPartition, Long> beginningOffsets, List<ConsumerRecord<byte[], byte[]>> consumerRecords, ProducerRecord<byte[], byte[]> tombstone) throws InterruptedException, ExecutionException, TimeoutException, IOException {
+    void should_send_a_tombstone_to_the_correct_partition_if_an_offset_was_found(Map<TopicPartition, Long> beginningOffsets, List<List<ConsumerRecord<byte[], byte[]>>> consumerRecordsPerPoll, ProducerRecord<byte[], byte[]> tombstone) throws InterruptedException, ExecutionException, TimeoutException, IOException {
         var consumer = new MockConsumer<byte[], byte[]>(OffsetResetStrategy.EARLIEST);
         consumer.updateBeginningOffsets(beginningOffsets);
         consumer.schedulePollTask(() -> {
             consumer.rebalance(beginningOffsets.keySet());
-            consumerRecords.forEach(consumer::addRecord);
+            head(consumerRecordsPerPoll).forEach(consumer::addRecord);
         });
+        tail(consumerRecordsPerPoll)
+            .forEach(records -> consumer.schedulePollTask(() -> records.forEach(consumer::addRecord)));
+
         var producer = new MockProducer<>(true, new ByteArraySerializer(), new ByteArraySerializer());
 
         new OffsetResetter(consumer, producer, new ConnectOffsetKeyMapper()).reset(CONNECT_OFFSETS, "jdbc-source");
@@ -64,17 +68,29 @@ class OffsetResetterTest {
         return Stream.of(
             arguments(
                 Map.of(new TopicPartition(CONNECT_OFFSETS, 0), 0L),
-                List.of(new ConsumerRecord<>(CONNECT_OFFSETS, 0, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), "{}".getBytes(UTF_8))),
+                List.of(
+                    List.of(new ConsumerRecord<>(CONNECT_OFFSETS, 0, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), "{}".getBytes(UTF_8)))
+                ),
                 new ProducerRecord<>(CONNECT_OFFSETS, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), null)
             ),
             arguments(
                 Map.of(new TopicPartition(CONNECT_OFFSETS, 0), 0L),
                 List.of(
-                    new ConsumerRecord<>(CONNECT_OFFSETS, 0, 0, "[\"mongo-source\", {}]".getBytes(UTF_8), "{}".getBytes(UTF_8)),
-                    new ConsumerRecord<>(CONNECT_OFFSETS, 0, 1, "[\"jdbc-source\", {}]".getBytes(UTF_8), "{}".getBytes(UTF_8))
+                    List.of(
+                        new ConsumerRecord<>(CONNECT_OFFSETS, 0, 0, "[\"mongo-source\", {}]".getBytes(UTF_8), "{}".getBytes(UTF_8)),
+                        new ConsumerRecord<>(CONNECT_OFFSETS, 0, 1, "[\"jdbc-source\", {}]".getBytes(UTF_8), "{}".getBytes(UTF_8))
+                    )
                 ),
                 new ProducerRecord<>(CONNECT_OFFSETS, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), null)
             )
         );
+    }
+
+    static <T> T head(List<T> list) {
+        return list.get(0);
+    }
+
+    static <T> List<T> tail(List<T> list) {
+        return list.subList(1, list.size());
     }
 }
