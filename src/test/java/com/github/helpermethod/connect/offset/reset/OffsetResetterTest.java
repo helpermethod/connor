@@ -15,7 +15,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -80,6 +79,24 @@ class OffsetResetterTest {
                         new ConsumerRecord<>(CONNECT_OFFSETS, 0, 0, "[\"mongo-source\", {}]".getBytes(UTF_8), "{}".getBytes(UTF_8)),
                         new ConsumerRecord<>(CONNECT_OFFSETS, 0, 1, "[\"jdbc-source\", {}]".getBytes(UTF_8), "{}".getBytes(UTF_8))
                     )
+                ),
+                new ProducerRecord<>(CONNECT_OFFSETS, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), null)
+            ),
+            arguments(
+                Map.of(new TopicPartition(CONNECT_OFFSETS, 0), 0L, new TopicPartition(CONNECT_OFFSETS, 1), 0L),
+                List.of(
+                    List.of(
+                        new ConsumerRecord<>(CONNECT_OFFSETS, 0, 0, "[\"mongo-source\", {}]".getBytes(UTF_8), "{}".getBytes(UTF_8)),
+                        new ConsumerRecord<>(CONNECT_OFFSETS, 1, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), "{}".getBytes(UTF_8))
+                    )
+                ),
+                new ProducerRecord<>(CONNECT_OFFSETS, 1, "[\"jdbc-source\", {}]".getBytes(UTF_8), null)
+            ),
+            arguments(
+                Map.of(new TopicPartition(CONNECT_OFFSETS, 0), 0L),
+                List.of(
+                    List.of(new ConsumerRecord<>(CONNECT_OFFSETS, 0, 0, "[\"mongo-source\", {}]".getBytes(UTF_8), "{}".getBytes(UTF_8))),
+                    List.of(new ConsumerRecord<>(CONNECT_OFFSETS, 0, 1, "[\"jdbc-source\", {}]".getBytes(UTF_8), "{}".getBytes(UTF_8)))
                 ),
                 new ProducerRecord<>(CONNECT_OFFSETS, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), null)
             )
