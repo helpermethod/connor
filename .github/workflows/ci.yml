@@ -6,9 +6,9 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
-      - name: Checkout
+      - name: Check out repository
         uses: actions/checkout@v2
-      - name: Setup GraalVM
+      - name: Set up GraalVM
         uses: DeLaGuardo/setup-graalvm@3.1
         with:
           graalvm-version: 21.0.0.java11
