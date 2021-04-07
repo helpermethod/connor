@@ -104,7 +104,7 @@
                 <version>2.22.2</version>
                 <configuration>
                     <argLine>
-                        -agentlib:native-image-agent=access-filter-file=target/classes/access-filter.json,config-output-dir=target/classes/META-INF/native-image
+                        -agentlib:native-image-agent=access-filter-file=${project.build.outputDirectory}/access-filter.json,config-output-dir=${project.build.outputDirectory}/META-INF/native-image
                     </argLine>
                     <systemPropertyVariables>
                         <jacoco-agent.destfile>${project.build.directory}/jacoco.exec</jacoco-agent.destfile>
@@ -160,6 +160,11 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>3.3.0</version>
+                <configuration>
+                    <descriptors>
+                        <descriptor>${project.basedir}/src/assembly/bin.xml</descriptor>
+                    </descriptors>
+                </configuration>
                 <executions>
                     <execution>
                         <phase>package</phase>
