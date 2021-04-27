@@ -24,7 +24,7 @@ jobs:
         with:
           graalvm-version: 21.1.0.java11
       - name: Install Native Image
-        run: ${{gu-binary}} install native-image
+        run: ${{gu}} install native-image
       - name: Cache dependencies
         uses: actions/cache@v2
         with:
