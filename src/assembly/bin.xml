@@ -6,7 +6,7 @@
     </formats>
     <fileSets>
         <fileSet>
-            <directory>target</directory>
+            <directory>${project.build.directory}</directory>
             <outputDirectory>bin</outputDirectory>
             <includes>
                 <include>kafka-connect-offset-reset</include>
