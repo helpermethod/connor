@@ -24,22 +24,20 @@ class OffsetResetter {
     }
 
     void reset(String topic, String connector) throws IOException, InterruptedException, ExecutionException, TimeoutException {
-        try (consumer; producer) {
-            consumer.subscribe(List.of(topic));
+        consumer.subscribe(List.of(topic));
 
-            while (true) {
-                var records = consumer.poll(Duration.ofSeconds(5));
+        while (true) {
+            var records = consumer.poll(Duration.ofSeconds(5));
 
-                if (records.isEmpty()) {
+            if (records.isEmpty()) {
+                return;
+            }
+
+            for (var record : records) {
+                if (connectOffsetKeyMapper.map(record.key()).connector().equals(connector)) {
+                    sendTombstone(topic, record.partition(), record.key());
+
                     return;
-                }
-
-                for (var record : records) {
-                    if (connectOffsetKeyMapper.map(record.key()).connector.equals(connector)) {
-                        sendTombstone(topic, record.partition(), record.key());
-
-                        return;
-                    }
                 }
             }
         }

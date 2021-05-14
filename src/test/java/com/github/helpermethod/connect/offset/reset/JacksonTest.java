@@ -16,6 +16,6 @@ class JacksonTest {
 		var connectOffsetKeyMapper = new ConnectOffsetKeyMapper();
 		var key = connectOffsetKeyMapper.map("[\"jdbc-source\", {}]".getBytes(UTF_8));
 
-		assertThat(key.connector).isEqualTo("jdbc-source");
+		assertThat(key.connector()).isEqualTo("jdbc-source");
 	}
 }

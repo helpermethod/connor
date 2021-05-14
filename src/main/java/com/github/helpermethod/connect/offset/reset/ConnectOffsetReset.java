@@ -27,8 +27,11 @@ public class ConnectOffsetReset implements Runnable {
 
     @Override
     public void run() {
-        try {
-            new OffsetResetter(createConsumer(), createProducer(), new ConnectOffsetKeyMapper()).reset(topic, connector);
+        try(
+            var consumer = createConsumer();
+            var producer = createProducer()
+        ) {
+            new OffsetResetter(consumer, producer, new ConnectOffsetKeyMapper()).reset(topic, connector);
         } catch (IOException | InterruptedException | ExecutionException | TimeoutException e) {
             throw new RuntimeException(e);
         }

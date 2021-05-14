@@ -8,7 +8,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.release>11</maven.compiler.release>
+        <maven.compiler.release>16</maven.compiler.release>
         <picocli.version>4.6.1</picocli.version>
         <jacoco.version>0.8.7</jacoco.version>
     </properties>
@@ -137,34 +137,15 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.graalvm.nativeimage</groupId>
-                <artifactId>native-image-maven-plugin</artifactId>
-                <version>21.1.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>native-image</goal>
-                        </goals>
-                        <phase>package</phase>
-                        <configuration>
-                            <mainClass>com.github.helpermethod.connect.offset.reset.ConnectOffsetReset</mainClass>
-                            <imageName>kafka-connect-offset-reset</imageName>
-                            <buildArgs>
-                                <buildArg>-H:+AllowIncompleteClasspath</buildArg>
-                            </buildArgs>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>3.3.0</version>
                 <configuration>
                     <appendAssemblyId>false</appendAssemblyId>
-                    <descriptors>
-                        <descriptor>${project.basedir}/src/assembly/bin.xml</descriptor>
-                    </descriptors>
+                    <finalName>${project.artifactId}</finalName>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
                 </configuration>
                 <executions>
                     <execution>
