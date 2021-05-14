@@ -11,7 +11,7 @@ jobs:
       - name: Set up GraalVM
         uses: DeLaGuardo/setup-graalvm@3.1
         with:
-          graalvm-version: 21.1.0.java11
+          graalvm-version: 21.1.0.java16
       - name: Install Native Image
         run: gu install native-image
       - name: Cache dependencies

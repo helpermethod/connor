@@ -44,28 +44,31 @@ class ConnectOffsetResetTest {
     void should_send_a_tombstone_to_the_correct_partition() throws InterruptedException, ExecutionException, TimeoutException {
         createConnectOffsetsTopic();
 
-        var producer = createProducer();
-        var metadata =
-            producer
-                .send(new ProducerRecord<>(CONNECT_OFFSETS, "[\"jdbc-source\", {}]", "{}"))
-                .get(1, SECONDS);
+        try (
+            var consumer = createConnectOffsetsConsumer();
+            var producer = createProducer()
+        ) {
+            var metadata =
+                producer
+                    .send(new ProducerRecord<>(CONNECT_OFFSETS, "[\"jdbc-source\", {}]", "{}"))
+                    .get(1, SECONDS);
 
-        new CommandLine(new ConnectOffsetReset())
-            .execute(
-                "--bootstrap-servers", kafka.getBootstrapServers(),
-                "--topic", CONNECT_OFFSETS,
-                "--connector", "jdbc-source"
-            );
+            new CommandLine(new ConnectOffsetReset())
+                .execute(
+                    "--bootstrap-servers", kafka.getBootstrapServers(),
+                    "--topic", CONNECT_OFFSETS,
+                    "--connector", "jdbc-source"
+                );
 
-        var consumer = createConnectOffsetsConsumer();
-        var records = consumer.poll(Duration.ofSeconds(5));
+            var records = consumer.poll(Duration.ofSeconds(5));
 
-        assertThat(records.records(new TopicPartition(CONNECT_OFFSETS, metadata.partition())))
-            .extracting("key", "value")
-            .containsExactly(
-                tuple("[\"jdbc-source\", {}]", "{}"),
-                tuple("[\"jdbc-source\", {}]", null)
-            );
+            assertThat(records.records(new TopicPartition(CONNECT_OFFSETS, metadata.partition())))
+                .extracting("key", "value")
+                .containsExactly(
+                    tuple("[\"jdbc-source\", {}]", "{}"),
+                    tuple("[\"jdbc-source\", {}]", null)
+                );
+        }
     }
 
     private KafkaProducer<String, String> createProducer() {
@@ -87,10 +90,11 @@ class ConnectOffsetResetTest {
     }
 
     private void createConnectOffsetsTopic() throws InterruptedException, ExecutionException, TimeoutException {
-        AdminClient
-            .create(Map.of(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, kafka.getBootstrapServers()))
-            .createTopics(List.of(new NewTopic(CONNECT_OFFSETS, 25, (short) 1)))
-            .all()
-            .get(5, SECONDS);
+        try (var adminClient = AdminClient.create(Map.of(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, kafka.getBootstrapServers()))) {
+            adminClient
+                .createTopics(List.of(new NewTopic(CONNECT_OFFSETS, 25, (short) 1)))
+                .all()
+                .get(5, SECONDS);
+        }
     }
 }

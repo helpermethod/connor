@@ -8,7 +8,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.release>11</maven.compiler.release>
+        <maven.compiler.release>16</maven.compiler.release>
         <picocli.version>4.6.1</picocli.version>
         <jacoco.version>0.8.7</jacoco.version>
     </properties>
@@ -142,6 +142,7 @@
                 <version>3.3.0</version>
                 <configuration>
                     <appendAssemblyId>false</appendAssemblyId>
+                    <finalName>${project.artifactId}</finalName>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
