@@ -15,12 +15,12 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 class OffsetResetter {
     private final Consumer<byte[], byte[]> consumer;
     private final Producer<byte[], byte[]> producer;
-    private final ConnectOffsetKeyMapper connectOffsetKeyMapper;
+    private final ConnectorNameExtractor connectorNameExtractor;
 
-    OffsetResetter(Consumer<byte[], byte[]> consumer, Producer<byte[], byte[]> producer, ConnectOffsetKeyMapper connectOffsetKeyMapper) {
+    OffsetResetter(Consumer<byte[], byte[]> consumer, Producer<byte[], byte[]> producer, ConnectorNameExtractor connectorNameExtractor) {
         this.consumer = consumer;
         this.producer = producer;
-        this.connectOffsetKeyMapper = connectOffsetKeyMapper;
+        this.connectorNameExtractor = connectorNameExtractor;
     }
 
     void reset(String topic, String connector) throws IOException, InterruptedException, ExecutionException, TimeoutException {
@@ -34,7 +34,7 @@ class OffsetResetter {
             }
 
             for (var record : records) {
-                if (connectOffsetKeyMapper.map(record.key()).connector().equals(connector)) {
+                if (connectorNameExtractor.extract(record.key()).equals(connector)) {
                     sendTombstone(topic, record.partition(), record.key());
 
                     return;

@@ -31,7 +31,7 @@ public class ConnectOffsetReset implements Runnable {
             var consumer = createConsumer();
             var producer = createProducer()
         ) {
-            new OffsetResetter(consumer, producer, new ConnectOffsetKeyMapper()).reset(topic, connector);
+            new OffsetResetter(consumer, producer, new ConnectorNameExtractor()).reset(topic, connector);
         } catch (IOException | InterruptedException | ExecutionException | TimeoutException e) {
             throw new RuntimeException(e);
         }

@@ -37,7 +37,7 @@ class OffsetResetterTest {
         consumer.schedulePollTask(() -> consumer.rebalance(beginningOffsets.keySet()));
         var producer = new MockProducer<>(true, new ByteArraySerializer(), new ByteArraySerializer());
 
-        new OffsetResetter(consumer, producer, new ConnectOffsetKeyMapper()).reset(CONNECT_OFFSETS, "jdbc-source");
+        new OffsetResetter(consumer, producer, new ConnectorNameExtractor()).reset(CONNECT_OFFSETS, "jdbc-source");
 
         assertThat(producer.history()).isEmpty();
     }
@@ -56,7 +56,7 @@ class OffsetResetterTest {
 
         var producer = new MockProducer<>(true, new ByteArraySerializer(), new ByteArraySerializer());
 
-        new OffsetResetter(consumer, producer, new ConnectOffsetKeyMapper()).reset(CONNECT_OFFSETS, "jdbc-source");
+        new OffsetResetter(consumer, producer, new ConnectorNameExtractor()).reset(CONNECT_OFFSETS, "jdbc-source");
 
         assertThat(producer.history())
             .usingElementComparatorOnFields("topic", "partition", "key", "value")

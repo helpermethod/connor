@@ -12,10 +12,10 @@ import static org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 @DisplayNameGeneration(ReplaceUnderscores.class)
 class JacksonTest {
 	@Test
-	void should_map_array_elements_to_fields() throws IOException {
-		var connectOffsetKeyMapper = new ConnectOffsetKeyMapper();
-		var key = connectOffsetKeyMapper.map("[\"jdbc-source\", {}]".getBytes(UTF_8));
+	void should_extract_connector_name_from_key() throws IOException {
+		var connectorNameExtractor = new ConnectorNameExtractor();
+		var connectorName = connectorNameExtractor.extract("[\"jdbc-source\", {}]".getBytes(UTF_8));
 
-		assertThat(key.connector()).isEqualTo("jdbc-source");
+		assertThat(connectorName).isEqualTo("jdbc-source");
 	}
 }
