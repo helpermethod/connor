@@ -1,5 +1,7 @@
 name: semgrep
-on: pull_request
+
+on: push
+
 jobs:
   semgrep:
     runs-on: ubuntu-20.04
