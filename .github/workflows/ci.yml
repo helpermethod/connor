@@ -28,7 +28,7 @@ jobs:
           restore-keys: |
             mvn-
       - name: Build
-        run: ./mvnw --no-transfer-progress verify
+        run: ./mvnw --batch-mode verify
       - name: Upload code coverage
         uses: codecov/codecov-action@v1
   release:
