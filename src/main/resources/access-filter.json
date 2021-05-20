@@ -25,9 +25,6 @@
       "excludeClasses": "ch.qos.logback.**"
     },
     {
-      "excludeClasses": "org.graalvm.compiler.hotspot.management.AggregatedMemoryPoolBean"
-    },
-    {
       "excludeClasses": "com.github.helpermethod.connect.offset.reset.JacksonTest"
     },
     {

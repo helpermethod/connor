@@ -148,7 +148,7 @@
                         <phase>package</phase>
                         <configuration>
                             <mainClass>com.github.helpermethod.connect.offset.reset.ConnectOffsetReset</mainClass>
-                            <imageName>kafka-connect-offset-reset</imageName>
+                            <imageName>${project.artifactId}</imageName>
                             <buildArgs>
                                 <buildArg>-H:+AllowIncompleteClasspath</buildArg>
                             </buildArgs>
