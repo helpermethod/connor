@@ -32,6 +32,7 @@ jobs:
       - name: Upload code coverage
         uses: codecov/codecov-action@v1
       - name: Upload native-image configuration files
+        if: startsWith(github.ref, 'refs/tags/')
         uses: actions/upload-artifact@v2
         with:
           name: native-image-configuration
@@ -44,8 +45,9 @@ jobs:
       matrix:
         os: [ubuntu-20.04,macos-11.0,windows-2019]
     steps:
+      - name: Download native-image configuration files
+        uses: actions/download-artifact@v2
+        with:
+          name: native-image-configuration
       - name: Hello World!
         run: echo Hello World!
-
-
-
