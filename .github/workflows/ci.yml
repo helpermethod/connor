@@ -28,6 +28,18 @@ jobs:
           restore-keys: |
             mvn-
       - name: Build
-        run: ./mvnw -B verify
+        run: ./mvnw --no-transfer-progress verify
       - name: Upload code coverage
         uses: codecov/codecov-action@v1
+  release:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: build
+    runs-on: ${{os.matrix}}
+    strategy:
+      matrix:
+        os: [ubuntu-20.04,macos-11.0,windows-2019]
+    steps:
+      -
+
+
+
