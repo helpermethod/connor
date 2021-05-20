@@ -44,6 +44,6 @@ class OffsetResetter {
     }
 
     private void sendTombstone(String topic, Integer partition, byte[] key) throws InterruptedException, ExecutionException, TimeoutException {
-        producer.send(new ProducerRecord<>(topic, partition, key, null)).get(1, SECONDS);
+        producer.send(new ProducerRecord<>(topic, partition, key, null)).get(5, SECONDS);
     }
 }
