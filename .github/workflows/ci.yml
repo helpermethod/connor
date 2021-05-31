@@ -46,7 +46,7 @@ jobs:
         include:
           - os: ubuntu-20.04
             artifact_name: connect-offset-reset-linux-amd64.zip
-          - os: macos-11
+          - os: macos-10.15
             artifact_name: connect-offset-reset-darwin-amd64.zip
           - os: windows-2019
             artifact_name: connect-offset-reset-windows-amd64.zip
