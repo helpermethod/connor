@@ -63,4 +63,4 @@ jobs:
           restore-keys: |
             mvn-
       - name: Build
-        run: ./mvnw --batch-mode -Prelease verify
+        run: ./mvnw --batch-mode --activate-profiles release verify
