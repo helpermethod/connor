@@ -45,8 +45,11 @@ jobs:
       matrix:
         include:
           - os: ubuntu-20.04
-          - os: macos-11.0
+            artifact_name: connect-offset-reset-linux-amd64.zip
+          - os: macos-11
+            artifact_name: connect-offset-reset-darwin-amd64.zip
           - os: windows-2019
+            artifact_name: connect-offset-reset-windows-amd64.zip
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
@@ -69,3 +72,8 @@ jobs:
             mvn-
       - name: Build
         run: ./mvnw --batch-mode --activate-profiles release -Drevision=${GITHUB_REF##*/} verify
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{matrix.artifact_name}}
+          path: target/connect-offset-reset-*.zip
