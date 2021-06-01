@@ -20,9 +20,9 @@ import java.util.concurrent.TimeoutException;
 public class ConnectOffsetReset implements Runnable {
     @Option(names = {"-b", "--bootstrap-servers"}, required = true, description = "A comma-separated list of broker urls.")
     private String bootstrapServers;
-    @Option(names = {"-t", "--topic"}, required = true, description = "The topic where Kafka Connect stores its Source Connector offsets.")
+    @Option(names = {"-o", "--offset-topic"}, required = true, description = "The topic where Kafka Connect stores its Source Connector offsets.")
     private String topic;
-    @Option(names = {"-c", "--connector"}, required = true, description = "The source connector for which to reset the offset.")
+    @Option(names = {"-c", "--connector-name"}, required = true, description = "The source connector name for which to reset the offset.")
     private String connector;
 
     @Override

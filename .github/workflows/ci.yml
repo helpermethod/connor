@@ -50,9 +50,9 @@ jobs:
           - os: macos-10.15
             shell: bash
             artifact_name: connect-offset-reset-darwin-amd64.zip
-#          - os: windows-2019
-#            shell: cmd
-#            artifact_name: connect-offset-reset-windows-amd64.zip
+          - os: windows-2019
+            shell: cmd
+            artifact_name: connect-offset-reset-windows-amd64.zip
     defaults:
       run:
         shell: ${{ matrix.shell }}
@@ -69,6 +69,9 @@ jobs:
           graalvm-version: 21.1.0.java16
       - name: Install Native Image
         run: gu install native-image
+      - if: runner.os == 'Windows'
+        name: Install Visual C++ build tools workload for Visual Studio 2017 Build Tools
+        run: choco install visualstudio2017-workload-vctools
       - name: Cache dependencies
         uses: actions/cache@v2
         with:
@@ -77,7 +80,9 @@ jobs:
           restore-keys: |
             mvn-
       - name: Build
-        run: ./mvnw --batch-mode --activate-profiles release -Drevision=${GITHUB_REF##*/} verify
+        run: |
+          [[ OS_RUNNER = 'Windows' ]] && call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
+          ./mvnw --batch-mode --activate-profiles release -Drevision=${GITHUB_REF##*/} verify
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:

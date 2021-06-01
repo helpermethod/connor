@@ -10,6 +10,7 @@
             <outputDirectory>bin</outputDirectory>
             <includes>
                 <include>connect-offset-reset</include>
+                <include>connect-offset-reset.exe</include>
             </includes>
         </fileSet>
     </fileSets>
