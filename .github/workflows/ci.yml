@@ -50,12 +50,12 @@ jobs:
           - os: macos-10.15
             shell: bash
             artifact_name: connect-offset-reset-darwin-amd64.zip
-          - os: windows-2019
-            shell: cmd
-            artifact_name: connect-offset-reset-windows-amd64.zip
+#          - os: windows-2019
+#            shell: cmd
+#            artifact_name: connect-offset-reset-windows-amd64.zip
     defaults:
       run:
-        shell: ${{matrix.shell}}
+        shell: ${{ matrix.shell }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
@@ -73,7 +73,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.m2/repository
-          key: mvn-${{hashFiles('pom.xml')}}
+          key: mvn-${{ hashFiles('pom.xml') }}
           restore-keys: |
             mvn-
       - name: Build
@@ -81,5 +81,5 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ${{matrix.artifact_name}}
+          name: ${{ matrix.artifact_name }}
           path: target/connect-offset-reset-*.zip
