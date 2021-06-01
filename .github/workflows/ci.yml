@@ -40,7 +40,7 @@ jobs:
   release:
     if: startsWith(github.ref, 'refs/tags/')
     needs: build
-    runs-on: ${{matrix.os}}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         include:
@@ -53,6 +53,9 @@ jobs:
           - os: windows-2019
             shell: cmd
             artifact_name: connect-offset-reset-windows-amd64.zip
+    defaults:
+      run:
+        shell: ${{matrix.shell}}
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
@@ -66,7 +69,6 @@ jobs:
           graalvm-version: 21.1.0.java16
       - name: Install Native Image
         run: gu install native-image
-        shell: ${{matrix.shell}}
       - name: Cache dependencies
         uses: actions/cache@v2
         with:
