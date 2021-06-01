@@ -44,12 +44,12 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: ubuntu-20.04
-            shell: bash
-            artifact_name: connect-offset-reset-linux-amd64.zip
-          - os: macos-10.15
-            shell: bash
-            artifact_name: connect-offset-reset-darwin-amd64.zip
+#          - os: ubuntu-20.04
+#            shell: bash
+#            artifact_name: connect-offset-reset-linux-amd64.zip
+#          - os: macos-10.15
+#            shell: bash
+#            artifact_name: connect-offset-reset-darwin-amd64.zip
           - os: windows-2019
             shell: cmd
             artifact_name: connect-offset-reset-windows-amd64.zip
@@ -81,7 +81,7 @@ jobs:
             mvn-
       - name: Build
         run: |
-          [[ OS_RUNNER = 'Windows' ]] && call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
           ./mvnw --batch-mode --activate-profiles release -Drevision=${GITHUB_REF##*/} verify
       - name: Upload artifact
         uses: actions/upload-artifact@v2
