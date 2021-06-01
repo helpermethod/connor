@@ -56,8 +56,8 @@ class ConnectOffsetResetTest {
             new CommandLine(new ConnectOffsetReset())
                 .execute(
                     "--bootstrap-servers", kafka.getBootstrapServers(),
-                    "--topic", CONNECT_OFFSETS,
-                    "--connector", "jdbc-source"
+                    "--offset-topic", CONNECT_OFFSETS,
+                    "--connector-name", "jdbc-source"
                 );
 
             var records = consumer.poll(Duration.ofSeconds(5));
