@@ -37,25 +37,18 @@ jobs:
         with:
           name: native-image-configuration
           path: target/classes/META-INF/native-image
-  release:
+  non_windows_release:
     if: startsWith(github.ref, 'refs/tags/')
     needs: build
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         include:
-#          - os: ubuntu-20.04
-#            shell: bash
-#            artifact_name: connect-offset-reset-linux-amd64.zip
-#          - os: macos-10.15
-#            shell: bash
-#            artifact_name: connect-offset-reset-darwin-amd64.zip
-          - os: windows-2019
-            shell: cmd
-            artifact_name: connect-offset-reset-windows-amd64.zip
-    defaults:
-      run:
-        shell: ${{ matrix.shell }}
+          - os: ubuntu-20.04
+            target: linux
+          - os: macos-10.15
+            target: darwin
+    name: ${{ matrix.target }} release
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
@@ -69,8 +62,7 @@ jobs:
           graalvm-version: 21.1.0.java16
       - name: Install Native Image
         run: gu install native-image
-      - if: runner.os == 'Windows'
-        name: Install Visual C++ build tools workload for Visual Studio 2017 Build Tools
+      - name: Install Visual C++ build tools workload for Visual Studio 2017 Build Tools
         run: choco install visualstudio2017-workload-vctools
       - name: Cache dependencies
         uses: actions/cache@v2
@@ -79,12 +71,54 @@ jobs:
           key: mvn-${{ hashFiles('pom.xml') }}
           restore-keys: |
             mvn-
+      - name: Extract version from tag name
+        id: extract_version
+        uses: battila7/get-version-action@v2
       - name: Build
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
-          ./mvnw --batch-mode --activate-profiles release -Drevision=${GITHUB_REF##*/} verify
+          ./mvnw --batch-mode --activate-profiles release -Drevision=${{steps.extract_version.outputs.version}} verify
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.artifact_name }}
+          name: connect-offset-reset-${{ matrix.target }}-amd64.zip
+          path: target/connect-offset-reset-*.zip
+  windows_release:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: build
+    runs-on: windows-2019
+    name: windows release
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Download native-image configuration files
+        uses: actions/download-artifact@v2
+        with:
+          name: native-image-configuration
+      - name: Set up GraalVM
+        uses: DeLaGuardo/setup-graalvm@3.1
+        with:
+          graalvm-version: 21.1.0.java16
+      - name: Install Native Image
+        run: gu install native-image
+        shell: cmd
+      - name: Install Visual C++ build tools workload for Visual Studio 2017 Build Tools
+        run: choco install visualstudio2017-workload-vctools
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: mvn-${{ hashFiles('pom.xml') }}
+          restore-keys: |
+            mvn-
+      - name: Extract version from tag name
+        id: extract_version
+        uses: battila7/get-version-action@v2
+      - name: Build
+        run: |
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
+          ./mvnw --batch-mode --activate-profiles release -Drevision=${{ steps.extract_version.outputs.version }} verify
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: connect-offset-reset-windows-amd64.zip
           path: target/connect-offset-reset-*.zip
