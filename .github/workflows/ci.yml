@@ -4,7 +4,7 @@ on:
     branches:
       - main
     tags:
-      - '[0-9].[0-9].[0-9]'
+      - v[0-9].[0-9].[0-9]
   pull_request:
     branches:
       - main
@@ -37,7 +37,7 @@ jobs:
         with:
           name: native-image-configuration
           path: target/classes/META-INF/native-image
-  non_windows_release:
+  non_windows_releases:
     if: startsWith(github.ref, 'refs/tags/')
     needs: build
     runs-on: ${{ matrix.os }}
@@ -76,7 +76,7 @@ jobs:
         uses: battila7/get-version-action@v2
       - name: Build
         run: |
-          ./mvnw --batch-mode --activate-profiles release -Drevision=${{steps.extract_version.outputs.version}} verify
+          ./mvnw --batch-mode --activate-profiles release -Drevision=${{steps.extract_version.outputs.version-without-v}} verify
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
@@ -116,7 +116,7 @@ jobs:
       - name: Build
         run: |
           call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
-          ./mvnw --batch-mode --activate-profiles release -Drevision=${{ steps.extract_version.outputs.version }} verify
+          ./mvnw --batch-mode --activate-profiles release -Drevision=${{ steps.extract_version.outputs.version-without-v }} verify
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
