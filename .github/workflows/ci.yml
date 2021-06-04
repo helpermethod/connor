@@ -113,7 +113,7 @@ jobs:
         uses: battila7/get-version-action@v2
       - name: Build
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
+          call C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64
           ./mvnw --batch-mode --activate-profiles release -Drevision=${{ steps.extract_version.outputs.version-without-v }} verify
         shell: cmd
       - name: Upload artifact
