@@ -37,7 +37,7 @@ jobs:
         with:
           name: native-image-configuration
           path: target/classes/META-INF/native-image
-  non_windows_releases:
+  non_windows_distributions:
     if: startsWith(github.ref, 'refs/tags/')
     needs: build
     runs-on: ${{ matrix.os }}
@@ -48,7 +48,7 @@ jobs:
             target: linux
           - os: macos-10.15
             target: darwin
-    name: ${{ matrix.target }} release
+    name: ${{ matrix.target }} distribution
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
@@ -80,11 +80,11 @@ jobs:
         with:
           name: connect-offset-reset-${{ matrix.target }}-amd64.zip
           path: target/connect-offset-reset-*.zip
-  windows_release:
+  windows_distribution:
     if: startsWith(github.ref, 'refs/tags/')
     needs: build
     runs-on: windows-2019
-    name: windows release
+    name: windows distribution
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
