@@ -74,7 +74,7 @@ jobs:
         uses: battila7/get-version-action@v2
       - name: Build
         run: |
-          ./mvnw --batch-mode --activate-profiles release -Drevision=${{steps.extract_version.outputs.version-without-v}} verify
+          ./mvnw --batch-mode --activate-profiles release -Drevision=${{ steps.extract_version.outputs.version-without-v }} verify
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
@@ -111,7 +111,7 @@ jobs:
         uses: battila7/get-version-action@v2
       - name: Build
         run: |
-          call C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64
+          call 'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat'
           ./mvnw --batch-mode --activate-profiles release -Drevision=${{ steps.extract_version.outputs.version-without-v }} verify
         shell: cmd
       - name: Upload artifact
