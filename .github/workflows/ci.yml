@@ -4,7 +4,7 @@ on:
     branches:
       - main
     tags:
-      - v[0-9]+.[0-9]+.[0-9]+
+      - '[0-9]+.[0-9]+.[0-9]+'
   pull_request:
     branches:
       - main
@@ -121,3 +121,19 @@ jobs:
         with:
           name: connect-offset-reset-windows-amd64.zip
           path: target/connect-offset-reset-*.zip
+  release:
+    needs:
+      - non_windows_distributions
+      - windows_distribution
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Download distributions
+        uses: actions/download-artifact@v2
+      - uses: marvinpinto/action-automatic-releases@v1.2.1
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          files: |
+            connect-offset-reset-*.zip
