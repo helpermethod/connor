@@ -27,7 +27,7 @@ public class ConnectOffsetReset implements Runnable {
 
     @Override
     public void run() {
-        try(
+        try (
             var consumer = createConsumer();
             var producer = createProducer()
         ) {
