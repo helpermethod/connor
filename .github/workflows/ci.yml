@@ -37,7 +37,7 @@ jobs:
         with:
           name: native-image-configuration
           path: target/classes/META-INF/native-image
-  non_windows_distributions:
+  assemble_non_windows_distributions:
     if: startsWith(github.ref, 'refs/tags/')
     needs: build
     runs-on: ${{ matrix.os }}
@@ -47,7 +47,7 @@ jobs:
           - os: ubuntu-20.04
             target: linux
           - os: macos-10.15
-            target: darwin
+            target: osx
     name: ${{ matrix.target }} distribution
     steps:
       - name: Check out repository
@@ -74,13 +74,13 @@ jobs:
         uses: battila7/get-version-action@v2
       - name: Build
         run: |
-          ./mvnw --batch-mode --activate-profiles release -Drevision=${{ steps.extract_version.outputs.version-without-v }} verify
+          ./mvnw --batch-mode --activate-profiles assemble_windows_distribution -Drevision=${{ steps.extract_version.outputs.version-without-v }} verify
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: connect-offset-reset-${{ matrix.target }}-amd64.zip
+          name: connect-offset-reset-${{ steps.extract_version.outputs.version-without-v }}-${{ matrix.target }}-x86_64.zip
           path: target/connect-offset-reset-*.zip
-  windows_distribution:
+  assemble_windows_distribution:
     if: startsWith(github.ref, 'refs/tags/')
     needs: build
     runs-on: windows-2019
@@ -114,26 +114,15 @@ jobs:
       - name: Build
         run: |
           call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
-          ./mvnw --batch-mode --activate-profiles release -Drevision=${{ steps.extract_version.outputs.version-without-v }} verify
+          ./mvnw --batch-mode --activate-profiles assemble -Drevision=${{ steps.extract_version.outputs.version-without-v }} verify
         shell: cmd
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: connect-offset-reset-windows-amd64.zip
+          name: connect-offset-reset-${{ steps.extract_version.outputs.version-without-v }}-windows-x86_64.zip
           path: target/connect-offset-reset-*.zip
   release:
     needs:
-      - non_windows_distributions
-      - windows_distribution
+      - assemble_non_windows_distributions
+      - assemble_windows_distribution
     runs-on: ubuntu-20.04
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v2
-      - name: Download distributions
-        uses: actions/download-artifact@v2
-      - uses: marvinpinto/action-automatic-releases@v1.2.1
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          prerelease: false
-          files: |
-            connect-offset-reset-*.zip

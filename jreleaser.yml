@@ -1,0 +1,22 @@
+project:
+  name: connect-offset-reset
+  description: A commandline tool for resetting Kafka Connect source connector offsets.
+  website: https://github.com/helpermethod/connect-offset-reset
+  authors:
+    - Oliver Weiler
+  license: Apache-2
+  extraProperties:
+    inceptionYear: 2021
+
+release:
+  github:
+
+distributions:
+  connect-offset-reset:
+    artifacts:
+      - path: target/{{distributionName}}-{{projectVersion}}-linux-x86_64.zip
+        platform: linux
+      - path: target/{{distributionName}}-{{projectVersion}}-osx-x86_64.zip
+        platform: osx
+      - path: target/{{distributionName}}-{{projectVersion}}-windows-x86_64.zip
+        platform: windows

@@ -162,7 +162,7 @@
 
     <profiles>
         <profile>
-            <id>release</id>
+            <id>assemble</id>
             <properties>
                 <maven.test.skip>true</maven.test.skip>
             </properties>
