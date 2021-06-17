@@ -74,7 +74,7 @@ jobs:
             mvn-
       - name: Build
         run: |
-          ./mvnw --batch-mode --activate-profiles assemble_windows_distribution -Drevision=${{ github.event.inputs.version }} verify
+          ./mvnw --batch-mode --activate-profiles assemble -Drevision=${{ github.event.inputs.version }} verify
       - name: Upload assembly
         uses: actions/upload-artifact@v2
         with:
