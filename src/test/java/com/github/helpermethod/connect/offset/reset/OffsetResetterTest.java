@@ -59,7 +59,7 @@ class OffsetResetterTest {
         new OffsetResetter(consumer, producer, new ConnectorNameExtractor()).reset(CONNECT_OFFSETS, "jdbc-source");
 
         assertThat(producer.history())
-            .usingElementComparatorOnFields("topic", "partition", "key", "value")
+            .usingRecursiveFieldByFieldElementComparatorOnFields("topic", "partition", "key", "value")
             .containsExactly(tombstone);
     }
 
