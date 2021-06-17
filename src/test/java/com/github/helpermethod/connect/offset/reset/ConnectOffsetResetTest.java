@@ -51,7 +51,7 @@ class ConnectOffsetResetTest {
             var metadata =
                 producer
                     .send(new ProducerRecord<>(CONNECT_OFFSETS, "[\"jdbc-source\", {}]", "{}"))
-                    .get(1, SECONDS);
+                    .get(5, SECONDS);
 
             new CommandLine(new ConnectOffsetReset())
                 .execute(

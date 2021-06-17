@@ -42,9 +42,9 @@ class OffsetResetterTest {
         assertThat(producer.history()).isEmpty();
     }
 
-    @MethodSource("consumerRecords")
+    @MethodSource
     @ParameterizedTest
-    void should_send_a_tombstone_to_the_correct_partition_if_an_offset_was_found(Map<TopicPartition, Long> beginningOffsets, List<List<ConsumerRecord<byte[], byte[]>>> consumerRecordsPerPoll, ProducerRecord<byte[], byte[]> tombstone) throws InterruptedException, ExecutionException, TimeoutException, IOException {
+    void should_send_a_tombstone_to_the_correct_partition_when_an_offset_was_found(Map<TopicPartition, Long> beginningOffsets, List<List<ConsumerRecord<byte[], byte[]>>> consumerRecordsPerPoll, ProducerRecord<byte[], byte[]> tombstone) throws InterruptedException, ExecutionException, TimeoutException, IOException {
         var consumer = new MockConsumer<byte[], byte[]>(OffsetResetStrategy.EARLIEST);
         consumer.updateBeginningOffsets(beginningOffsets);
         consumer.schedulePollTask(() -> {
@@ -63,7 +63,7 @@ class OffsetResetterTest {
             .containsExactly(tombstone);
     }
 
-    static Stream<Arguments> consumerRecords() {
+    static Stream<Arguments> should_send_a_tombstone_to_the_correct_partition_when_an_offset_was_found() {
         return Stream.of(
             arguments(
                 Map.of(new TopicPartition(CONNECT_OFFSETS, 0), 0L),
