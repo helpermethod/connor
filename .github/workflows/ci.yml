@@ -40,7 +40,7 @@ jobs:
         with:
           name: native-image-configuration
           path: target/classes/META-INF/native-image
-  assemble_non_windows_distributions:
+  non_windows_distributions:
     if: github.event_name == 'workflow_dispatch'
     needs: build
     runs-on: ${{ matrix.os }}
@@ -75,12 +75,12 @@ jobs:
       - name: Build
         run: |
           ./mvnw --batch-mode --activate-profiles assemble -Drevision=${{ github.event.inputs.version }} verify
-      - name: Upload assembly
+      - name: Upload distribution
         uses: actions/upload-artifact@v2
         with:
           name: connect-offset-reset-${{ github.event.inputs.version }}-${{ matrix.target }}-x86_64.zip
           path: target/connect-offset-reset-*.zip
-  assemble_windows_distribution:
+  windows_distribution:
     if: github.event_name == 'workflow_dispatch'
     needs: build
     runs-on: windows-2019
@@ -113,15 +113,15 @@ jobs:
           call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
           ./mvnw --batch-mode --activate-profiles assemble -Drevision=${{ github.event.inputs.version }} verify
         shell: cmd
-      - name: Upload assembly
+      - name: Upload distribution
         uses: actions/upload-artifact@v2
         with:
           name: connect-offset-reset-${{ github.event.inputs.version }}-windows-x86_64.zip
           path: target/connect-offset-reset-*.zip
   release:
     needs:
-      - assemble_non_windows_distributions
-      - assemble_windows_distribution
+      - non_windows_distributions
+      - windows_distribution
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
@@ -133,10 +133,10 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v2
         with:
-          distribution: adpt
+          distribution: adopt
           java-version: 16
       - name: Release
-        uses: jreleaser/release-action@v1
+        uses: jreleaser/release-action@1.3.0
         env:
           JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           JRELEASER_PROJECT_VERSION: ${{ github.event.inputs.version }}
