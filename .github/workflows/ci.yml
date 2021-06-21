@@ -137,6 +137,8 @@ jobs:
           java-version: 16
       - name: Release
         uses: jreleaser/release-action@1.3.0
+        with:
+          version: early-access 
         env:
           JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           JRELEASER_PROJECT_VERSION: ${{ github.event.inputs.version }}
