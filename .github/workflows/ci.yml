@@ -128,8 +128,19 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Download platform-specific assemblies
+      - name: Download linux distribution
         uses: actions/download-artifact@v2
+        with:
+          name: connect-offset-reset-${{ github.event.inputs.version }}-linux-x86_64.zip
+      - name: Download osx distribution
+        uses: actions/download-artifact@v2
+        with:
+          name: connect-offset-reset-${{ github.event.inputs.version }}-osx-x86_64.zip
+      - name: Download windows distribution
+        uses: actions/download-artifact@v2
+        with:
+          name: connect-offset-reset-${{ github.event.inputs.version }}-windows-x86_64.zip
+ 
       - name: Setup Java
         uses: actions/setup-java@v2
         with:
