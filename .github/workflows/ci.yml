@@ -35,7 +35,7 @@ jobs:
       - name: Upload code coverage
         uses: codecov/codecov-action@v1
       - name: Upload native-image configuration files
-        if: github.event_name == 'workflow_dispatch'
+        #if: github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@v2
         with:
           name: native-image-configuration
