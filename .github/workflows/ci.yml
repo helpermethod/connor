@@ -40,6 +40,17 @@ jobs:
         with:
           name: native-image-configuration
           path: target/classes/META-INF/native-image
+  test:
+    needs: build
+    steps:
+      - name: co
+        uses: actions/checkout@v2
+      - name: dl
+        uses: actions/download-artifact@v2
+        with:
+          name: native-image-configuration
+      - name: ls
+        runs: ls -R
   non_windows_distributions:
     if: github.event_name == 'workflow_dispatch'
     needs: build
