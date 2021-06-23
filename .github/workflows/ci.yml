@@ -50,6 +50,8 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: native-image-configuration
+          path: target/classes/META-INF/native-i
+mage
       - name: ls
         run: ls -R
   non_windows_distributions:
