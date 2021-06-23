@@ -42,6 +42,7 @@ jobs:
           path: target/classes/META-INF/native-image
   test:
     needs: build
+    runs-on: ubuntu-20.04
     steps:
       - name: co
         uses: actions/checkout@v2
