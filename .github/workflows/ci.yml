@@ -50,7 +50,7 @@ jobs:
         with:
           name: native-image-configuration
       - name: ls
-        runs: ls -R
+        run: ls -R
   non_windows_distributions:
     if: github.event_name == 'workflow_dispatch'
     needs: build
