@@ -35,24 +35,11 @@ jobs:
       - name: Upload code coverage
         uses: codecov/codecov-action@v1
       - name: Upload native-image configuration files
-        #if: github.event_name == 'workflow_dispatch'
+        if: github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@v2
         with:
           name: native-image-configuration
           path: target/classes/META-INF/native-image
-  test:
-    needs: build
-    runs-on: ubuntu-20.04
-    steps:
-      - name: co
-        uses: actions/checkout@v2
-      - name: dl
-        uses: actions/download-artifact@v2
-        with:
-          name: native-image-configuration
-          path: target/classes/META-INF/native-image
-      - name: ls
-        run: ls -R
   non_windows_distributions:
     if: github.event_name == 'workflow_dispatch'
     needs: build
@@ -72,6 +59,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: native-image-configuration
+          path: target/classes/META-INF/native-image
       - name: Set up GraalVM
         uses: DeLaGuardo/setup-graalvm@3.1
         with:
@@ -105,6 +93,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: native-image-configuration
+          path: target/classes/META-INF/native-image
       - name: Set up GraalVM
         uses: DeLaGuardo/setup-graalvm@3.1
         with:
