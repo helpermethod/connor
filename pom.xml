@@ -174,7 +174,7 @@
                 <maven.test.skip>true</maven.test.skip>
             </properties>
             <build>
-		<finalName>connect-offset-reset-${project.version}-${os.detected.name}—${os.detected.arch}</finalName>
+		<finalName>connect-offset-reset-${project.version}-${os.detected.name}-${os.detected.arch}</finalName>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
