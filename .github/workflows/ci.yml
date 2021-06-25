@@ -79,7 +79,7 @@ jobs:
       - name: Upload distribution
         uses: actions/upload-artifact@v2
         with:
-          name: connect-offset-reset-${{ github.event.inputs.version }}-${{ matrix.target }}-x86_64.zip
+          name: connect-offset-reset-${{ matrix.target }}-x86_64.zip
           path: target/connect-offset-reset-*.zip
   windows_distribution:
     if: github.event_name == 'workflow_dispatch'
@@ -118,7 +118,7 @@ jobs:
       - name: Upload distribution
         uses: actions/upload-artifact@v2
         with:
-          name: connect-offset-reset-${{ github.event.inputs.version }}-windows-x86_64.zip
+          name: connect-offset-reset-windows-x86_64.zip
           path: target/connect-offset-reset-*.zip
   release:
     needs:
@@ -133,16 +133,18 @@ jobs:
       - name: Download linux distribution
         uses: actions/download-artifact@v2
         with:
-          name: connect-offset-reset-${{ github.event.inputs.version }}-linux-x86_64.zip
+          name: connect-offset-reset-linux-x86_64.zip
+          path: target
       - name: Download osx distribution
         uses: actions/download-artifact@v2
         with:
-          name: connect-offset-reset-${{ github.event.inputs.version }}-osx-x86_64.zip
+          name: connect-offset-reset-osx-x86_64.zip
+          path: target
       - name: Download windows distribution
         uses: actions/download-artifact@v2
         with:
-          name: connect-offset-reset-${{ github.event.inputs.version }}-windows-x86_64.zip
- 
+          name: connect-offset-reset-windows-x86_64.zip
+          path: target
       - name: Setup Java
         uses: actions/setup-java@v2
         with:
