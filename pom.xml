@@ -81,6 +81,13 @@
     </dependencies>
 
     <build>
+        <extensions>
+            <extension>
+                <groupId>kr.motd.maven</groupId>
+		<artifactId>os-maven-plugin</artifactId>
+		<version>1.7.0</version>
+            </extension>
+        </extensions>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -167,7 +174,7 @@
                 <maven.test.skip>true</maven.test.skip>
             </properties>
             <build>
-                <extensions>                                        <extension>                                         <groupId>kr.motd.maven</groupId>                <artifactId>os-maven-plugin</artifactId>                                                        <version>1.7.0</version>                    </extension>                                </extensions>                                   <finalName>connect-offset-reset-${project.version}-${os.detected.name}—${os.detected.arch}</finalName>
+		<finalName>connect-offset-reset-${project.version}-${os.detected.name}—${os.detected.arch}</finalName>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
