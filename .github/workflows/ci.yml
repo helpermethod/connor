@@ -27,9 +27,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.m2/repository
-          key: mvn-${{hashFiles('pom.xml')}}
+          key: ${{ runner.os }}-mvn-${{hashFiles('pom.xml')}}
           restore-keys: |
-            mvn-
+            ${{ runner.os }}-mvn-
       - name: Build
         run: ./mvnw --batch-mode verify
       - name: Upload code coverage
@@ -70,9 +70,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.m2/repository
-          key: mvn-${{ hashFiles('pom.xml') }}
+          key: ${{ runner.os }}-mvn-${{ hashFiles('pom.xml') }}
           restore-keys: |
-            mvn-
+            ${{ runner.os }}-mvn-
       - name: Build
         run: |
           ./mvnw --batch-mode --activate-profiles assemble -Drevision=${{ github.event.inputs.version }} verify
@@ -107,9 +107,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.m2/repository
-          key: mvn-${{ hashFiles('pom.xml') }}
+          key: ${{ runner.os }}-mvn-${{ hashFiles('pom.xml') }}
           restore-keys: |
-            mvn-
+            ${{ runner.os }}-mvn-
       - name: Build
         run: |
           call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
