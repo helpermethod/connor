@@ -13,7 +13,7 @@ release:
 
 distributions:
   connect-offset-reset:
-    type: NATIVE_IMAGE
+    type: BINARY 
     artifacts:
       - path: target/{{distributionName}}-{{projectVersion}}-linux-x86_64.zip
         platform: linux
