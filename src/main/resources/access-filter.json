@@ -29,6 +29,9 @@
     },
     {
       "excludeClasses": "com.github.helpermethod.connect.offset.reset.ConnectOffsetResetTest"
+    },
+    {
+      "excludeClasses": "com.github.helpermethod.connect.offset.reset.OffsetResetterTest"
     }
   ]
 }
