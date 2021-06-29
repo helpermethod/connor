@@ -155,5 +155,5 @@ jobs:
         with:
           version: early-access 
         env:
-          JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          JRELEASER_GITHUB_TOKEN: ${{ secrets.GH_PAT }}
           JRELEASER_PROJECT_VERSION: ${{ github.event.inputs.version }}
