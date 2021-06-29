@@ -22,4 +22,4 @@ distributions:
       - path: target/{{distributionName}}-{{projectVersion}}-windows-x86_64.zip
         platform: windows
     brew:
-      active: ALWAYS
+      active: release
