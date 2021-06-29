@@ -102,7 +102,9 @@ jobs:
         run: gu install native-image
         shell: cmd
       - name: Install Visual C++ build tools workload for Visual Studio 2017 Build Tools
-        run: choco install visualstudio2017-workload-vctools
+        run: |
+          choco upgrade visualstudio2019enterprise
+          choco install visualstudio2017-workload-vctools
       - name: Cache dependencies
         uses: actions/cache@v2
         with:
