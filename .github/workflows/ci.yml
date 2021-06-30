@@ -101,6 +101,8 @@ jobs:
       - name: Install Native Image
         run: gu install native-image
         shell: cmd
+      - name: Upgrade Visual Studio 2019 Enterprise
+        run: choco upgrade visualstudio2019enterprise
       - name: Install Visual C++ build tools workload for Visual Studio 2017 Build Tools
         run: choco install visualstudio2017-workload-vctools
       - name: Cache dependencies
