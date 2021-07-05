@@ -18,7 +18,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
       - name: Set up GraalVM
-        uses: DeLaGuardo/setup-graalvm@3.1
+        uses: DeLaGuardo/setup-graalvm@4.0
         with:
           graalvm-version: 21.1.0.java16
       - name: Install Native Image
@@ -61,7 +61,7 @@ jobs:
           name: native-image-configuration
           path: target/classes/META-INF/native-image
       - name: Set up GraalVM
-        uses: DeLaGuardo/setup-graalvm@3.1
+        uses: DeLaGuardo/setup-graalvm@4.0
         with:
           graalvm-version: 21.1.0.java16
       - name: Install Native Image
