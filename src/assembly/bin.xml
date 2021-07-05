@@ -13,5 +13,11 @@
                 <include>connect-offset-reset.exe</include>
             </includes>
         </fileSet>
+        <fileSet>
+            <includes>
+                <include>LICENSE</include>
+                <include>README.md</include>
+            </includes>
+        </fileSet>
     </fileSets>
 </assembly>
