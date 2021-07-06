@@ -8,9 +8,6 @@ project:
   extraProperties:
     inceptionYear: 2021
 
-release:
-  github:
-
 distributions:
   connect-offset-reset:
     type: BINARY 
