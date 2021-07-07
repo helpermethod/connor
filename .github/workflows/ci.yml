@@ -105,7 +105,7 @@ jobs:
       - name: Add MSBuild to PATH
         uses: microsoft/setup-msbuild@v1.0.2
       - name: Set up Visual Studio shell
-        uses: egor-tensin/vs-shell@v1
+        uses: egor-tensin/vs-shell@v2
       - name: Cache dependencies
         uses: actions/cache@v2
         with:
