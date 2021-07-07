@@ -102,8 +102,10 @@ jobs:
       - name: Install Native Image
         run: gu install native-image
         shell: cmd
-      - name: Install Visual C++ build tools workload for Visual Studio 2017 Build Tools
-        run: choco install visualstudio2017-workload-vctools
+      - name: Add MSBuild to PATH
+        uses: microsoft/setup-msbuild@v1.0.2
+      - name: Set up Visual Studio shell
+        uses: egor-tensin/vs-shell@v2
       - name: Cache dependencies
         uses: actions/cache@v2
         with:
@@ -112,10 +114,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
       - name: Build
-        run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
-          ./mvnw --batch-mode ${{ env.MAVEN_OPTS }} --activate-profiles assemble -Drevision=${{ github.event.inputs.version }} verify
-        shell: cmd
+        run: mvnw --batch-mode ${{ env.MAVEN_OPTS }} --activate-profiles assemble -Drevision=${{ github.event.inputs.version }} verify
       - name: Upload distribution
         uses: actions/upload-artifact@v2
         with:
