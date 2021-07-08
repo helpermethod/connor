@@ -8,6 +8,8 @@ A commandline tool for resetting Kafka Connect source connector offsets.
 
 # Installation
 
+## Homebrew 
+
 ```
 brew tap helpermethod/homebrew-tap
 brew install connect-offset-reset
