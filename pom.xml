@@ -172,6 +172,7 @@
             <id>assemble</id>
             <properties>
                 <maven.test.skip>true</maven.test.skip>
+                <jacoco.skip>true</jacoco.skip>
             </properties>
             <build>
                 <finalName>connect-offset-reset-${project.version}-${os.detected.name}-${os.detected.arch}</finalName>
