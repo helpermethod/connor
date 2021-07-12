@@ -20,3 +20,5 @@ distributions:
         platform: windows
     brew:
       active: ALWAYS
+    scoop:
+      acive: ALWAYS
