@@ -21,4 +21,4 @@ distributions:
     brew:
       active: ALWAYS
     scoop:
-      acive: ALWAYS
+      active: ALWAYS
