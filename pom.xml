@@ -145,24 +145,24 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.graalvm.nativeimage</groupId>
-                <artifactId>native-image-maven-plugin</artifactId>
-                <version>21.1.0</version>
+                <groupId>org.graalvm.buildtools</groupId>
+                <artifactId>native-maven-plugin</artifactId>
+                <version>0.9.1</version>
                 <executions>
                     <execution>
                         <goals>
-                            <goal>native-image</goal>
+                            <goal>build</goal>
                         </goals>
                         <phase>package</phase>
-                        <configuration>
-                            <mainClass>com.github.helpermethod.connect.offset.reset.ConnectOffsetReset</mainClass>
-                            <imageName>${project.artifactId}</imageName>
-                            <buildArgs>
-                                <buildArg>-H:+AllowIncompleteClasspath</buildArg>
-                            </buildArgs>
-                        </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <mainClass>com.github.helpermethod.connect.offset.reset.ConnectOffsetReset</mainClass>
+                    <imageName>${project.artifactId}</imageName>
+                    <buildArgs>
+                        <buildArg>-H:+AllowIncompleteClasspath</buildArg>
+                    </buildArgs>
+                </configuration>
             </plugin>
         </plugins>
     </build>

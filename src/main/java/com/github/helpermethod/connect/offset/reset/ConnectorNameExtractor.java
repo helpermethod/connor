@@ -8,7 +8,7 @@ class ConnectorNameExtractor {
     private final JSON json;
 
     ConnectorNameExtractor() {
-        json = JSON.std;
+        json = new JSON();
     }
 
     String extract(byte[] key) throws IOException {
