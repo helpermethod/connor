@@ -15,5 +15,12 @@ brew tap helpermethod/homebrew-tap
 brew install connect-offset-reset
 ```
 
+## Scoop
+
+```sh
+scoop bucket add helpermethod https://github.com/helpermethod/scoop-helpermethod.git
+scopp install connect-offset-reset
+```
+
 # Usage
 
