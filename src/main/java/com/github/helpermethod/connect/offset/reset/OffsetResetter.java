@@ -42,7 +42,7 @@ class OffsetResetter {
             for (var record : records) {
                 if (connectorNameExtractor.extract(record.key()).equals(connector)) {
                     System.out.printf(Ansi.ON.string("""
-                    Found committed offsets in topic @|bold,cyan %s|@, partition @|bold,cyan %s|@.
+I                    Found offsets in topic @|bold,cyan %s|@, partition @|bold,cyan %s|@.
                     Sending tombstone.
                     """), record.topic(), record.partition());
 
