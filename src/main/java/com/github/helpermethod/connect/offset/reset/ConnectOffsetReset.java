@@ -40,7 +40,7 @@ public class ConnectOffsetReset implements Runnable {
     private KafkaConsumer<byte[], byte[]> createConsumer() {
         var consumerConfig = Map.<String, Object>of(
             ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers,
-            ConsumerConfig.GROUP_ID_CONFIG, "kafka-connect-offset-reset-" + new Random().nextInt(100_000),
+            ConsumerConfig.GROUP_ID_CONFIG, "connect-offset-reset-" + new Random().nextInt(100_000),
             ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false,
             ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest"
         );
