@@ -28,27 +28,27 @@ class OffsetResetter {
     void reset(String topic, String connector) throws IOException, InterruptedException, ExecutionException, TimeoutException {
         consumer.subscribe(List.of(topic));
 
-        System.out.printf(Ansi.ON.string("Searching for committed offsets for source connector @|bold,cyan %s|@.%n"), connector);
+        System.out.printf(Ansi.AUTO.string("Searching for committed offsets for source connector @|bold,cyan %s|@.%n"), connector);
 
         while (true) {
             var records= consumer.poll(Duration.ofSeconds(5));
 
             if (records.isEmpty()) {
-                System.out.println(Ansi.ON.string("@|bold,yellow No offsets were found.|@"));
+                System.out.println(Ansi.AUTO.string("@|bold,yellow No offsets were found.|@"));
 
                 return;
             }
 
             for (var record : records) {
                 if (connectorNameExtractor.extract(record.key()).equals(connector)) {
-                    System.out.printf(Ansi.ON.string("""
+                    System.out.printf(Ansi.AUTO.string("""
 I                    Found offsets in topic @|bold,cyan %s|@, partition @|bold,cyan %s|@.
                     Sending tombstone.
                     """), record.topic(), record.partition());
 
                     sendTombstone(topic, record.partition(), record.key());
 
-                    System.out.println(Ansi.ON.string("@|bold,green Reset successful.|@"));
+                    System.out.println(Ansi.AUTO.string("@|bold,green Reset successful.|@"));
 
                     return;
                 }
