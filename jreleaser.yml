@@ -13,11 +13,11 @@ distributions:
     type: BINARY 
     artifacts:
       - path: target/{{distributionName}}-{{projectVersion}}-linux-x86_64.zip
-        platform: linux
+        platform: linux-x86_64
       - path: target/{{distributionName}}-{{projectVersion}}-osx-x86_64.zip
-        platform: osx
+        platform: osx-x86_64
       - path: target/{{distributionName}}-{{projectVersion}}-windows-x86_64.zip
-        platform: windows
+        platform: windows-x86_64
     brew:
       active: ALWAYS
     scoop:
