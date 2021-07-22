@@ -37,7 +37,7 @@ class ConnectOffsetResetTest {
 
     @Container
     KafkaContainer kafka =
-        new KafkaContainer(parse("confluentinc/cp-kafka:6.0.2"))
+        new KafkaContainer(parse("confluentinc/cp-kafka:6.2.0"))
             .withEnv("KAFKA_AUTO_CREATE_TOPICS_ENABLE", "false");
 
     @Test
