@@ -1,6 +1,5 @@
 package com.github.helpermethod.connect.offset.reset;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.jr.ob.JSON;
 
 import java.io.IOException;
@@ -16,7 +15,7 @@ class ConnectorNameExtractor {
         try {
             return json.arrayOfFrom(String.class, key)[0];
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new AssertionError("Should never happen", e);
         }
     }
 }

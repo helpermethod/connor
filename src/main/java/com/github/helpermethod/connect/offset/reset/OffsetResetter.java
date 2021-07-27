@@ -21,6 +21,7 @@ import java.util.stream.StreamSupport;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static java.util.concurrent.TimeUnit.of;
 import static java.util.function.Predicate.not;
+import static java.util.stream.StreamSupport.*;
 
 class OffsetResetter {
     private final Consumer<byte[], byte[]> consumer;
@@ -36,15 +37,14 @@ class OffsetResetter {
     void reset(String topic, String connector) throws IOException, InterruptedException, ExecutionException, TimeoutException {
         consumer.subscribe(List.of(topic));
 
-        System.out.printf(Ansi.AUTO.string("Searching for committed offsets for source connector @|bold,cyan %s|@.%n"), connector);
+        System.out.printf(Ansi.AUTO.string("Searching committed offsets for @|bold,cyan %s|@.%n"), connector);
 
         var offsets =
             Stream
                 .generate(() -> consumer.poll(Duration.ofSeconds(5)))
                 .takeWhile(not(ConsumerRecords::isEmpty))
                 .flatMap(records ->
-                    StreamSupport
-                        .stream(records.spliterator(), false)
+                    stream(records.spliterator(), false)
                         .filter(record -> connectorNameExtractor.extract(record.key()).equals(connector))
                 )
                 .toList();
@@ -55,12 +55,10 @@ class OffsetResetter {
             return;
         }
 
-        System.out.println(Ansi.AUTO.string("@|bold, green %s|@ offsets were found."));
+        System.out.printf(Ansi.AUTO.string("@|bold,green %s|@ offset(s) found.%n"), offsets.size());
 
         for (var offset : offsets) {
-            System.out.printf(Ansi.AUTO.string("""
-                    Sending tombstone to topic @|bold,cyan %s|@, partition @|bold,cyan %s|@.
-                    """), offset.topic(), offset.partition());
+            System.out.printf(Ansi.AUTO.string("Sending tombstone to topic @|bold,cyan %s|@, partition @|bold,cyan %s.|@%n"), offset.topic(), offset.partition());
 
             sendTombstone(offset.topic(), offset.partition(), offset.key());
         }
