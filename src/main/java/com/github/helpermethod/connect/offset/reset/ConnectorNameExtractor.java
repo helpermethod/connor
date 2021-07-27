@@ -1,5 +1,6 @@
 package com.github.helpermethod.connect.offset.reset;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.jr.ob.JSON;
 
 import java.io.IOException;
@@ -11,7 +12,11 @@ class ConnectorNameExtractor {
         json = new JSON();
     }
 
-    String extract(byte[] key) throws IOException {
-        return json.arrayOfFrom(String.class, key)[0];
+    String extract(byte[] key) {
+        try {
+            return json.arrayOfFrom(String.class, key)[0];
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
