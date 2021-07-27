@@ -11,7 +11,11 @@ class ConnectorNameExtractor {
         json = new JSON();
     }
 
-    String extract(byte[] key) throws IOException {
-        return json.arrayOfFrom(String.class, key)[0];
+    String extract(byte[] key) {
+        try {
+            return json.arrayOfFrom(String.class, key)[0];
+        } catch (IOException e) {
+            throw new AssertionError("Should never happen", e);
+        }
     }
 }

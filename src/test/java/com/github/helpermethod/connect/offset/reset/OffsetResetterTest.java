@@ -44,7 +44,7 @@ class OffsetResetterTest {
 
     @MethodSource
     @ParameterizedTest
-    void should_send_a_tombstone_to_the_correct_partition_when_an_offset_was_found(Map<TopicPartition, Long> beginningOffsets, List<List<ConsumerRecord<byte[], byte[]>>> consumerRecordsPerPoll, ProducerRecord<byte[], byte[]> tombstone) throws InterruptedException, ExecutionException, TimeoutException, IOException {
+    void should_send_tombstones_to_all_partitions_where_an_offset_was_found(Map<TopicPartition, Long> beginningOffsets, List<List<ConsumerRecord<byte[], byte[]>>> consumerRecordsPerPoll, List<ProducerRecord<byte[], byte[]>> tombstone) throws InterruptedException, ExecutionException, TimeoutException, IOException {
         var consumer = new MockConsumer<byte[], byte[]>(OffsetResetStrategy.EARLIEST);
         consumer.updateBeginningOffsets(beginningOffsets);
         consumer.schedulePollTask(() -> {
@@ -60,17 +60,19 @@ class OffsetResetterTest {
 
         assertThat(producer.history())
             .usingRecursiveFieldByFieldElementComparatorOnFields("topic", "partition", "key", "value")
-            .containsExactly(tombstone);
+            .isEqualTo(tombstone);
     }
 
-    static Stream<Arguments> should_send_a_tombstone_to_the_correct_partition_when_an_offset_was_found() {
+    static Stream<Arguments> should_send_tombstones_to_all_partitions_where_an_offset_was_found() {
         return Stream.of(
             arguments(
                 Map.of(new TopicPartition(CONNECT_OFFSETS, 0), 0L),
                 List.of(
                     List.of(new ConsumerRecord<>(CONNECT_OFFSETS, 0, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), "{}".getBytes(UTF_8)))
                 ),
-                new ProducerRecord<>(CONNECT_OFFSETS, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), null)
+                List.of(
+                    new ProducerRecord<>(CONNECT_OFFSETS, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), null)
+                )
             ),
             arguments(
                 Map.of(new TopicPartition(CONNECT_OFFSETS, 0), 0L),
@@ -80,7 +82,9 @@ class OffsetResetterTest {
                         new ConsumerRecord<>(CONNECT_OFFSETS, 0, 1, "[\"jdbc-source\", {}]".getBytes(UTF_8), "{}".getBytes(UTF_8))
                     )
                 ),
-                new ProducerRecord<>(CONNECT_OFFSETS, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), null)
+                List.of(
+                    new ProducerRecord<>(CONNECT_OFFSETS, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), null)
+                )
             ),
             arguments(
                 Map.of(new TopicPartition(CONNECT_OFFSETS, 0), 0L, new TopicPartition(CONNECT_OFFSETS, 1), 0L),
@@ -90,7 +94,9 @@ class OffsetResetterTest {
                         new ConsumerRecord<>(CONNECT_OFFSETS, 1, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), "{}".getBytes(UTF_8))
                     )
                 ),
-                new ProducerRecord<>(CONNECT_OFFSETS, 1, "[\"jdbc-source\", {}]".getBytes(UTF_8), null)
+                List.of(
+                    new ProducerRecord<>(CONNECT_OFFSETS, 1, "[\"jdbc-source\", {}]".getBytes(UTF_8), null)
+                )
             ),
             arguments(
                 Map.of(new TopicPartition(CONNECT_OFFSETS, 0), 0L),
@@ -98,7 +104,20 @@ class OffsetResetterTest {
                     List.of(new ConsumerRecord<>(CONNECT_OFFSETS, 0, 0, "[\"mongo-source\", {}]".getBytes(UTF_8), "{}".getBytes(UTF_8))),
                     List.of(new ConsumerRecord<>(CONNECT_OFFSETS, 0, 1, "[\"jdbc-source\", {}]".getBytes(UTF_8), "{}".getBytes(UTF_8)))
                 ),
-                new ProducerRecord<>(CONNECT_OFFSETS, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), null)
+                List.of(
+                    new ProducerRecord<>(CONNECT_OFFSETS, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), null)
+                )
+            ),
+            arguments(
+                Map.of(new TopicPartition(CONNECT_OFFSETS, 0), 0L, new TopicPartition(CONNECT_OFFSETS, 1), 0L),
+                List.of(
+                    List.of(new ConsumerRecord<>(CONNECT_OFFSETS, 0, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), "{}".getBytes(UTF_8))),
+                    List.of(new ConsumerRecord<>(CONNECT_OFFSETS, 1, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), "{}".getBytes(UTF_8)))
+                ),
+                List.of(
+                    new ProducerRecord<>(CONNECT_OFFSETS, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), null),
+                    new ProducerRecord<>(CONNECT_OFFSETS, 1, "[\"jdbc-source\", {}]".getBytes(UTF_8), null)
+                )
             )
         );
     }
