@@ -15,12 +15,14 @@ import java.util.List;
 import java.util.Spliterator;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static java.util.concurrent.TimeUnit.of;
 import static java.util.function.Predicate.not;
+import static java.util.stream.Collectors.toSet;
 import static java.util.stream.StreamSupport.*;
 
 class OffsetResetter {
@@ -37,7 +39,7 @@ class OffsetResetter {
     void reset(String topic, String connector) throws IOException, InterruptedException, ExecutionException, TimeoutException {
         consumer.subscribe(List.of(topic));
 
-        System.out.printf(Ansi.AUTO.string("Searching committed offsets for @|bold,cyan %s|@.%n"), connector);
+        System.out.printf(Ansi.AUTO.string("Searching for committed offsets for @|bold,cyan %s|@.%n"), connector);
 
         var offsets =
             Stream
@@ -47,7 +49,7 @@ class OffsetResetter {
                     stream(records.spliterator(), false)
                         .filter(record -> connectorNameExtractor.extract(record.key()).equals(connector))
                 )
-                .toList();
+                .collect(toSet());
 
         if (offsets.isEmpty()) {
             System.out.println(Ansi.AUTO.string("@|bold,yellow No offsets were found.|@"));
