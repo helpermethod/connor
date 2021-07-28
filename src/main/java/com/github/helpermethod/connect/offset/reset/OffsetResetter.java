@@ -41,6 +41,8 @@ class OffsetResetter {
 
         System.out.printf(Ansi.AUTO.string("Searching for committed offsets for @|bold,cyan %s|@.%n"), connector);
 
+        record Offset(Integer partition, byte[] key) {}
+
         var offsets =
             Stream
                 .generate(() -> consumer.poll(Duration.ofSeconds(5)))
@@ -49,7 +51,8 @@ class OffsetResetter {
                     stream(records.spliterator(), false)
                         .filter(record -> connectorNameExtractor.extract(record.key()).equals(connector))
                 )
-                .collect(toSet());
+                .map(record -> new Offset(record.partition(), record.key()))
+                .collect(Collectors.toSet());
 
         if (offsets.isEmpty()) {
             System.out.println(Ansi.AUTO.string("@|bold,yellow No offsets were found.|@"));
@@ -60,9 +63,9 @@ class OffsetResetter {
         System.out.printf(Ansi.AUTO.string("@|bold,green %s|@ offset(s) found.%n"), offsets.size());
 
         for (var offset : offsets) {
-            System.out.printf(Ansi.AUTO.string("Sending tombstone to topic @|bold,cyan %s|@, partition @|bold,cyan %s.|@%n"), offset.topic(), offset.partition());
+            System.out.printf(Ansi.AUTO.string("Sending tombstone to topic @|bold,cyan %s|@, partition @|bold,cyan %s.|@%n"), topic, offset.partition());
 
-            sendTombstone(offset.topic(), offset.partition(), offset.key());
+            sendTombstone(topic, offset.partition(), offset.key());
         }
 
         System.out.println(Ansi.AUTO.string("@|bold,green Reset successful.|@"));
