@@ -12,15 +12,20 @@ import picocli.CommandLine.Help.Ansi;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.Spliterator;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static java.util.concurrent.TimeUnit.of;
 import static java.util.function.Predicate.not;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toSet;
 import static java.util.stream.StreamSupport.*;
 
 class OffsetResetter {
@@ -37,7 +42,9 @@ class OffsetResetter {
     void reset(String topic, String connector) throws IOException, InterruptedException, ExecutionException, TimeoutException {
         consumer.subscribe(List.of(topic));
 
-        System.out.printf(Ansi.AUTO.string("Searching committed offsets for @|bold,cyan %s|@.%n"), connector);
+        System.out.printf(Ansi.AUTO.string("Searching for committed offsets for @|bold,cyan %s|@.%n"), connector);
+
+        record Offset(Integer partition, byte[] key) {}
 
         var offsets =
             Stream
@@ -47,7 +54,8 @@ class OffsetResetter {
                     stream(records.spliterator(), false)
                         .filter(record -> connectorNameExtractor.extract(record.key()).equals(connector))
                 )
-                .toList();
+                .map(record -> new Offset(record.partition(), record.key()))
+                .collect(toSet());
 
         if (offsets.isEmpty()) {
             System.out.println(Ansi.AUTO.string("@|bold,yellow No offsets were found.|@"));
@@ -58,9 +66,9 @@ class OffsetResetter {
         System.out.printf(Ansi.AUTO.string("@|bold,green %s|@ offset(s) found.%n"), offsets.size());
 
         for (var offset : offsets) {
-            System.out.printf(Ansi.AUTO.string("Sending tombstone to topic @|bold,cyan %s|@, partition @|bold,cyan %s.|@%n"), offset.topic(), offset.partition());
+            System.out.printf(Ansi.AUTO.string("Sending tombstone to topic @|bold,cyan %s|@, partition @|bold,cyan %s.|@%n"), topic, offset.partition());
 
-            sendTombstone(offset.topic(), offset.partition(), offset.key());
+            sendTombstone(topic, offset.partition(), offset.key());
         }
 
         System.out.println(Ansi.AUTO.string("@|bold,green Reset successful.|@"));
