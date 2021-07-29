@@ -12,6 +12,8 @@ import picocli.CommandLine.Help.Ansi;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.Spliterator;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
@@ -22,6 +24,7 @@ import java.util.stream.StreamSupport;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static java.util.concurrent.TimeUnit.of;
 import static java.util.function.Predicate.not;
+import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toSet;
 import static java.util.stream.StreamSupport.*;
 
@@ -52,7 +55,7 @@ class OffsetResetter {
                         .filter(record -> connectorNameExtractor.extract(record.key()).equals(connector))
                 )
                 .map(record -> new Offset(record.partition(), record.key()))
-                .collect(Collectors.toSet());
+                .collect(toSet());
 
         if (offsets.isEmpty()) {
             System.out.println(Ansi.AUTO.string("@|bold,yellow No offsets were found.|@"));
