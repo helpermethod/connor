@@ -71,7 +71,7 @@ class OffsetResetterTest {
                     List.of(new ConsumerRecord<>(CONNECT_OFFSETS, 0, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), "{}".getBytes(UTF_8)))
                 ),
                 List.of(
-                    new ProducerRecord<>(CONNECT_OFFSETS, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), new byte[]{})
+                    new ProducerRecord<>(CONNECT_OFFSETS, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), null)
                 )
             ),
             arguments(
@@ -83,7 +83,7 @@ class OffsetResetterTest {
                     )
                 ),
                 List.of(
-                    new ProducerRecord<>(CONNECT_OFFSETS, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), new byte[]{})
+                    new ProducerRecord<>(CONNECT_OFFSETS, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), null)
                 )
             ),
             arguments(
@@ -95,7 +95,7 @@ class OffsetResetterTest {
                     )
                 ),
                 List.of(
-                    new ProducerRecord<>(CONNECT_OFFSETS, 1, "[\"jdbc-source\", {}]".getBytes(UTF_8), new byte[]{})
+                    new ProducerRecord<>(CONNECT_OFFSETS, 1, "[\"jdbc-source\", {}]".getBytes(UTF_8), null)
                 )
             ),
             arguments(
@@ -105,7 +105,7 @@ class OffsetResetterTest {
                     List.of(new ConsumerRecord<>(CONNECT_OFFSETS, 0, 1, "[\"jdbc-source\", {}]".getBytes(UTF_8), "{}".getBytes(UTF_8)))
                 ),
                 List.of(
-                    new ProducerRecord<>(CONNECT_OFFSETS, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), new byte[]{})
+                    new ProducerRecord<>(CONNECT_OFFSETS, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), null)
                 )
             ),
             arguments(
@@ -115,7 +115,7 @@ class OffsetResetterTest {
                     List.of(new ConsumerRecord<>(CONNECT_OFFSETS, 0, 1, "[\"jdbc-source\", {}]".getBytes(UTF_8), "{}".getBytes(UTF_8)))
                 ),
                 List.of(
-                    new ProducerRecord<>(CONNECT_OFFSETS, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), new byte[]{})
+                    new ProducerRecord<>(CONNECT_OFFSETS, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), null)
                 )
             ),
             arguments(
@@ -125,14 +125,14 @@ class OffsetResetterTest {
                     List.of(new ConsumerRecord<>(CONNECT_OFFSETS, 1, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), "{}".getBytes(UTF_8)))
                 ),
                 List.of(
-                    new ProducerRecord<>(CONNECT_OFFSETS, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), new byte[]{}),
-                    new ProducerRecord<>(CONNECT_OFFSETS, 1, "[\"jdbc-source\", {}]".getBytes(UTF_8), new byte[]{})
+                    new ProducerRecord<>(CONNECT_OFFSETS, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), null),
+                    new ProducerRecord<>(CONNECT_OFFSETS, 1, "[\"jdbc-source\", {}]".getBytes(UTF_8), null)
                 )
             ),
             arguments(
                 Map.of(new TopicPartition(CONNECT_OFFSETS, 0), 0L),
                 List.of(
-                    List.of(new ConsumerRecord<>(CONNECT_OFFSETS, 0, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), new byte[]{}))
+                    List.of(new ConsumerRecord<>(CONNECT_OFFSETS, 0, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), null))
                 ),
                 List.of()
             )

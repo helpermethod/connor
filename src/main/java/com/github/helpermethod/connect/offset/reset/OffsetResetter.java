@@ -20,8 +20,6 @@ import static java.util.stream.Collectors.toSet;
 import static java.util.stream.StreamSupport.stream;
 
 class OffsetResetter {
-    private static final byte[] TOMBSTONE = {};
-
     private final Consumer<byte[], byte[]> consumer;
     private final Producer<byte[], byte[]> producer;
     private final ConnectorNameExtractor connectorNameExtractor;
@@ -76,6 +74,6 @@ class OffsetResetter {
     }
 
     private void sendTombstone(String topic, Integer partition, byte[] key) throws InterruptedException, ExecutionException, TimeoutException {
-        producer.send(new ProducerRecord<>(topic, partition, key, TOMBSTONE)).get(5, SECONDS);
+        producer.send(new ProducerRecord<>(topic, partition, key, null)).get(5, SECONDS);
     }
 }
