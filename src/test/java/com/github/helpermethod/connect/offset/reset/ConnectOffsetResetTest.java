@@ -66,7 +66,7 @@ class ConnectOffsetResetTest {
                 .extracting("key", "value")
                 .containsExactly(
                     tuple("[\"jdbc-source\", {}]", "{}"),
-                    tuple("[\"jdbc-source\", {}]", "")
+                    tuple("[\"jdbc-source\", {}]", null)
                 );
         }
     }
