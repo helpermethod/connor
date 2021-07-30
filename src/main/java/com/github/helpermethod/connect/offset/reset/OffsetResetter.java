@@ -37,7 +37,7 @@ class OffsetResetter {
 
         record Offset(Integer partition, byte[] key, boolean tombstone) {}
 
-        var offsetsByKey =
+        var offsets =
             Stream
                 .generate(() -> consumer.poll(Duration.ofSeconds(5)))
                 .takeWhile(not(ConsumerRecords::isEmpty))
@@ -46,15 +46,7 @@ class OffsetResetter {
                         .filter(record -> connectorNameExtractor.extract(record.key()).equals(connector))
                 )
                 .map(record -> new Offset(record.partition(), record.key(), record.value() == null))
-                .collect(groupingBy(Offset::key));
-
-        var offsets =
-            offsetsByKey
-                .entrySet()
-                .stream()
-                .filter(not(entry -> entry.getValue().stream().anyMatch(Offset::tombstone)))
-                .flatMap(entry -> entry.getValue().stream())
-                .collect(toSet());
+                .toList();
 
         if (offsets.isEmpty()) {
             System.out.println(Ansi.AUTO.string("@|bold,yellow No offsets found.|@"));

@@ -60,7 +60,7 @@ class OffsetResetterTest {
 
         assertThat(producer.history())
             .usingRecursiveFieldByFieldElementComparatorOnFields("topic", "partition", "key", "value")
-            .containsAll(tombstones);
+            .containsExactlyInAnyOrderElementsOf(tombstones);
     }
 
     static Stream<Arguments> should_send_tombstones_to_all_partitions_where_an_offset_was_found() {
@@ -132,6 +132,7 @@ class OffsetResetterTest {
             arguments(
                 Map.of(new TopicPartition(CONNECT_OFFSETS, 0), 0L),
                 List.of(
+                    List.of(new ConsumerRecord<>(CONNECT_OFFSETS, 0, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), "{}")),
                     List.of(new ConsumerRecord<>(CONNECT_OFFSETS, 0, 0, "[\"jdbc-source\", {}]".getBytes(UTF_8), null))
                 ),
                 List.of()
