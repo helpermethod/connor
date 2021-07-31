@@ -14,7 +14,7 @@ class JacksonTest {
 	@Test
 	void should_extract_connector_name_from_key() throws IOException {
 		var connectorNameExtractor = new ConnectorNameExtractor();
-		var connectorName = connectorNameExtractor.extract("[\"jdbc-source\", {}]".getBytes(UTF_8));
+		var connectorName = connectorNameExtractor.extract("[\"jdbc-source\", {}]");
 
 		assertThat(connectorName).isEqualTo("jdbc-source");
 	}

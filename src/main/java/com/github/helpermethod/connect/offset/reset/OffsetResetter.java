@@ -11,20 +11,20 @@ import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static java.util.function.Predicate.not;
 import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toSet;
 import static java.util.stream.StreamSupport.stream;
 
 class OffsetResetter {
-    private final Consumer<byte[], byte[]> consumer;
-    private final Producer<byte[], byte[]> producer;
+    private final Consumer<String, byte[]> consumer;
+    private final Producer<String, byte[]> producer;
     private final ConnectorNameExtractor connectorNameExtractor;
 
-    OffsetResetter(Consumer<byte[], byte[]> consumer, Producer<byte[], byte[]> producer, ConnectorNameExtractor connectorNameExtractor) {
+    OffsetResetter(Consumer<String, byte[]> consumer, Producer<String, byte[]> producer, ConnectorNameExtractor connectorNameExtractor) {
         this.consumer = consumer;
         this.producer = producer;
         this.connectorNameExtractor = connectorNameExtractor;
@@ -35,9 +35,9 @@ class OffsetResetter {
 
         System.out.printf(Ansi.AUTO.string("Searching for committed offsets for @|bold,cyan %s|@.%n"), connector);
 
-        record Offset(Integer partition, byte[] key, boolean tombstone) {}
+        record Offset(Integer partition, String key, boolean tombstone) {}
 
-        var offsets =
+        var offsetsByKey =
             Stream
                 .generate(() -> consumer.poll(Duration.ofSeconds(5)))
                 .takeWhile(not(ConsumerRecords::isEmpty))
@@ -46,7 +46,15 @@ class OffsetResetter {
                         .filter(record -> connectorNameExtractor.extract(record.key()).equals(connector))
                 )
                 .map(record -> new Offset(record.partition(), record.key(), record.value() == null))
-                .toList();
+                .collect(groupingBy(Offset::key));
+
+        var offsets =
+            offsetsByKey
+                .entrySet()
+                .stream()
+                .filter(not(entry -> entry.getValue().stream().anyMatch(Offset::tombstone)))
+                .flatMap(entry -> entry.getValue().stream())
+                .collect(Collectors.toSet());
 
         if (offsets.isEmpty()) {
             System.out.println(Ansi.AUTO.string("@|bold,yellow No offsets found.|@"));
@@ -65,7 +73,7 @@ class OffsetResetter {
         System.out.println(Ansi.AUTO.string("@|bold,green Reset successful.|@"));
     }
 
-    private void sendTombstone(String topic, Integer partition, byte[] key) throws InterruptedException, ExecutionException, TimeoutException {
+    private void sendTombstone(String topic, Integer partition,String key) throws InterruptedException, ExecutionException, TimeoutException {
         producer.send(new ProducerRecord<>(topic, partition, key, null)).get(5, SECONDS);
     }
 }

@@ -6,6 +6,8 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.ByteArrayDeserializer;
 import org.apache.kafka.common.serialization.ByteArraySerializer;
+import org.apache.kafka.common.serialization.StringDeserializer;
+import org.apache.kafka.common.serialization.StringSerializer;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -37,7 +39,7 @@ public class ConnectOffsetReset implements Runnable {
         }
     }
 
-    private KafkaConsumer<byte[], byte[]> createConsumer() {
+    private KafkaConsumer<String, byte[]> createConsumer() {
         var consumerConfig = Map.<String, Object>of(
             ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers,
             ConsumerConfig.GROUP_ID_CONFIG, "connect-offset-reset-" + new Random().nextInt(100_000),
@@ -45,13 +47,13 @@ public class ConnectOffsetReset implements Runnable {
             ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest"
         );
 
-        return new KafkaConsumer<>(consumerConfig, new ByteArrayDeserializer(), new ByteArrayDeserializer());
+        return new KafkaConsumer<>(consumerConfig, new StringDeserializer(), new ByteArrayDeserializer());
     }
 
-    private KafkaProducer<byte[], byte[]> createProducer() {
+    private KafkaProducer<String, byte[]> createProducer() {
         var producerConfig = Map.<String, Object>of(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
 
-        return new KafkaProducer<>(producerConfig, new ByteArraySerializer(), new ByteArraySerializer());
+        return new KafkaProducer<>(producerConfig, new StringSerializer(), new ByteArraySerializer());
     }
 
     public static void main(String[] args) {

@@ -11,7 +11,7 @@ class ConnectorNameExtractor {
         json = new JSON();
     }
 
-    String extract(byte[] key) {
+    String extract(String key) {
         try {
             return json.arrayOfFrom(String.class, key)[0];
         } catch (IOException e) {
