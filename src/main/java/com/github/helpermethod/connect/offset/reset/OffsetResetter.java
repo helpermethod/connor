@@ -33,7 +33,7 @@ class OffsetResetter {
     void reset(String topic, String connector) throws IOException, InterruptedException, ExecutionException, TimeoutException {
         consumer.subscribe(List.of(topic));
 
-        System.out.printf(Ansi.AUTO.string("Searching for committed offsets for @|bold,cyan %s|@.%n"), connector);
+        System.out.println(Ansi.AUTO.string("Searching for @|bold,cyan source connector|@ offsets."));
 
         record Offset(Integer partition, String key, boolean tombstone) {}
 
