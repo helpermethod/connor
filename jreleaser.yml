@@ -20,5 +20,8 @@ distributions:
         platform: windows-x86_64
     brew:
       active: ALWAYS
+      # workaround for https://github.com/jreleaser/jreleaser/issues/337
+      cask:
+        enabled: false
     scoop:
       active: ALWAYS
