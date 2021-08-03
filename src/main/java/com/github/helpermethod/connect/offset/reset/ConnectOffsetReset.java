@@ -18,7 +18,7 @@ import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
-@Command(name = "connect-offset-reset", mixinStandardHelpOptions = true, version = "0.1.0")
+@Command(name = "connect-offset-reset", mixinStandardHelpOptions = true, version = "0.2.0")
 public class ConnectOffsetReset implements Runnable {
     @Option(names = {"-b", "--bootstrap-servers"}, required = true, description = "A comma-separated list of broker urls.")
     private String bootstrapServers;
