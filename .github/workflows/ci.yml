@@ -91,9 +91,7 @@ jobs:
           name: connect-offset-reset-${{ matrix.target }}-x86_64.zip
           path: target/connect-offset-reset-*.zip
   release:
-    needs:
-      - non_windows_distributions
-      - windows_distribution
+    needs: assemble
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
