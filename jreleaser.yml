@@ -27,3 +27,4 @@ distributions:
       active: ALWAYS
     chocolatey:
       active: ALWAYS
+      remoteBuild: true
