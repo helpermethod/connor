@@ -25,6 +25,4 @@ distributions:
         enabled: false
     scoop:
       active: ALWAYS
-    chocolatey:
-      active: ALWAYS
-      remoteBuild: true
+
