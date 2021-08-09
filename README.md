@@ -19,7 +19,7 @@ brew install connect-offset-reset
 
 ## On Windows
 
-## Via Scoop
+### Via Scoop
 
 ```sh
 scoop bucket add helpermethod https://github.com/helpermethod/scoop-helpermethod.git
