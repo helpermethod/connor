@@ -54,7 +54,7 @@ jobs:
             target: osx
             gu-binary: gu
           - os: windows-2019
-            target: osx
+            target: windows
             gu-binary: gu.cmd
     steps:
       - name: Check out repository
