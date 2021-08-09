@@ -33,5 +33,3 @@ scopp install connect-offset-reset
 ```
 
 # Usage
-
-:warning: TBD
