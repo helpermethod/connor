@@ -2,15 +2,15 @@
 
 [![ci](https://github.com/helpermethod/connect-offset-reset/actions/workflows/ci.yml/badge.svg)](https://github.com/helpermethod/connect-offset-reset/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/helpermethod/connect-offset-reset/branch/main/graph/badge.svg?token=niYlJRkALi)](https://codecov.io/gh/helpermethod/connect-offset-reset)
-[![license](https://badgen.net/badge/license/Apache-2.0/blue)](https://github.com/helpermethod/connect-offset-reset/blob/main/LICENSE)
+[![license](https://badgen.net/badge/license/Apache%20Licence%202.0/blue)](https://github.com/helpermethod/connect-offset-reset/blob/main/LICENSE)
 
 A commandline tool for resetting Kafka Connect source connector offsets.
 
 # Features
 
-:rocket: fast startup time and low memory footprint  
-:package: * no external dependencies  
-:rainbow: colorized output
+:rocket: Fast startup time and low memory footprint  
+:package: No external dependencies  
+:rainbow: Colorized output
 
 # Installation
 
@@ -33,4 +33,3 @@ scopp install connect-offset-reset
 ```
 
 # Usage
-
