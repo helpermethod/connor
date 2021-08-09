@@ -9,6 +9,8 @@ A commandline tool for resetting Kafka Connect source connector offsets.
 # Features
 
 * fast startup time and low memory footprint
+* no external dependencies
+* colorized output
 
 # Installation
 
