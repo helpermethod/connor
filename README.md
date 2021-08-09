@@ -9,7 +9,7 @@ A commandline tool for resetting Kafka Connect source connector offsets.
 # Features
 
 :rocket: fast startup time and low memory footprint  
-:package: * no external dependencies  
+:package: no external dependencies  
 :rainbow: colorized output
 
 # Installation
