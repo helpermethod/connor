@@ -30,4 +30,4 @@ scopp install connect-offset-reset
 
 # Usage
 
-:warning: Before running `connect-offset-reset`, make sure to stop the source connector. The easiest way to do this is via its [REST API](https://docs.confluent.io/platform/current/connect/references/restapi.html#put--connectors-(string-name)-pause)
+:warning: Before deleting the offsets for a source connector, make sure to always stop the source connector first. The easiest way to do this is via Kafka Connect's [REST API](https://docs.confluent.io/platform/current/connect/references/restapi.html#put--connectors-(string-name)-pause)
