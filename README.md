@@ -14,18 +14,14 @@ A commandline tool for resetting Kafka Connect source connector offsets.
 
 # Installation
 
-## On Mac
-
-### Via Homebrew
+## Via Homebrew
 
 ```sh
 brew tap helpermethod/homebrew-tap
 brew install connect-offset-reset
 ```
 
-## On Windows
-
-### Via Scoop
+## Via Scoop
 
 ```sh
 scoop bucket add helpermethod https://github.com/helpermethod/scoop-helpermethod.git
@@ -33,3 +29,5 @@ scopp install connect-offset-reset
 ```
 
 # Usage
+
+:warning: Before running `connect-offset-reset`, make sure to stop the source connector. The easiest way to do this is via its [REST API](https://docs.confluent.io/platform/current/connect/references/restapi.html#put--connectors-(string-name)-pause)
