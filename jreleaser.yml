@@ -26,3 +26,7 @@ distributions:
     scoop:
       active: ALWAYS
 
+announce:
+  twitter:
+    active: ALWAYS
+    status: 🚀 connect-offset-reset {{projectVersion}} has been released! {{releaseNotesUrl}}
