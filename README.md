@@ -18,14 +18,14 @@ Connor (short for: **Conn**ect**O**ffset**R**eset) is commandline tool for reset
 
 ```sh
 brew tap helpermethod/homebrew-tap
-brew install connect-offset-reset
+brew install connor
 ```
 
 ## Via Scoop
 
 ```sh
 scoop bucket add helpermethod https://github.com/helpermethod/scoop-helpermethod.git
-scopp install connect-offset-reset
+scopp install connor
 ```
 
 # Usage
