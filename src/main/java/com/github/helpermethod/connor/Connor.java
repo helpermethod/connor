@@ -1,4 +1,4 @@
-package com.github.helpermethod.connect.offset.reset;
+package com.github.helpermethod.connor;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -18,8 +18,8 @@ import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
-@Command(name = "connect-offset-reset", mixinStandardHelpOptions = true, version = "0.2.0")
-public class ConnectOffsetReset implements Runnable {
+@Command(name = "connor", mixinStandardHelpOptions = true, version = "0.7.0")
+public class Connor implements Runnable {
     @Option(names = {"-b", "--bootstrap-servers"}, required = true, description = "A comma-separated list of broker urls.")
     private String bootstrapServers;
     @Option(names = {"-t", "--offset-topic"}, required = true, description = "The topic where Kafka Connect stores its Source Connector offsets.")
@@ -42,7 +42,7 @@ public class ConnectOffsetReset implements Runnable {
     private KafkaConsumer<String, byte[]> createConsumer() {
         var consumerConfig = Map.<String, Object>of(
             ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers,
-            ConsumerConfig.GROUP_ID_CONFIG, "connect-offset-reset-" + new Random().nextInt(100_000),
+            ConsumerConfig.GROUP_ID_CONFIG, "connor-" + new Random().nextInt(100_000),
             ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false,
             ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest"
         );
@@ -57,6 +57,6 @@ public class ConnectOffsetReset implements Runnable {
     }
 
     public static void main(String[] args) {
-        System.exit(new CommandLine(new ConnectOffsetReset()).execute(args));
+        System.exit(new CommandLine(new Connor()).execute(args));
     }
 }

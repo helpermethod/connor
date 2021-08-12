@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.helpermethod</groupId>
-    <artifactId>connect-offset-reset</artifactId>
+    <artifactId>connor</artifactId>
     <version>${revision}</version>
 
     <properties>
@@ -173,7 +173,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>com.github.helpermethod.connect.offset.reset.ConnectOffsetReset</mainClass>
+                    <mainClass>com.github.helpermethod.connor.Connor</mainClass>
                     <imageName>${project.artifactId}</imageName>
                     <buildArgs>
                         <buildArg>-H:+AllowIncompleteClasspath</buildArg>
@@ -191,7 +191,7 @@
                 <jacoco.skip>true</jacoco.skip>
             </properties>
             <build>
-                <finalName>connect-offset-reset-${project.version}-${os.detected.name}-${os.detected.arch}</finalName>
+                <finalName>connor-${project.version}-${os.detected.name}-${os.detected.arch}</finalName>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>

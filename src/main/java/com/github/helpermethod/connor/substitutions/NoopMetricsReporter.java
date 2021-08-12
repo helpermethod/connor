@@ -1,4 +1,4 @@
-package com.github.helpermethod.connect.offset.reset.substitutions;
+package com.github.helpermethod.connor.substitutions;
 
 import com.oracle.svm.core.annotate.Substitute;
 import com.oracle.svm.core.annotate.TargetClass;

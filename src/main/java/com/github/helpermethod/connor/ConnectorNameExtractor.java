@@ -1,4 +1,4 @@
-package com.github.helpermethod.connect.offset.reset;
+package com.github.helpermethod.connor;
 
 import com.fasterxml.jackson.jr.ob.JSON;
 

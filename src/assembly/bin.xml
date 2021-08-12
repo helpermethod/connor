@@ -9,8 +9,8 @@
             <directory>${project.build.directory}</directory>
             <outputDirectory>bin</outputDirectory>
             <includes>
-                <include>connect-offset-reset</include>
-                <include>connect-offset-reset.exe</include>
+                <include>connor</include>
+                <include>connor.exe</include>
             </includes>
         </fileSet>
         <fileSet>

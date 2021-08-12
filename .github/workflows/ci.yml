@@ -90,8 +90,8 @@ jobs:
       - name: Upload distribution
         uses: actions/upload-artifact@v2
         with:
-          name: connect-offset-reset-${{ matrix.target }}-x86_64.zip
-          path: target/connect-offset-reset-*.zip
+          name: connor-${{ matrix.target }}-x86_64.zip
+          path: target/connor-*.zip
   release:
     needs: assemble
     runs-on: ubuntu-20.04
@@ -103,17 +103,17 @@ jobs:
       - name: Download linux distribution
         uses: actions/download-artifact@v2
         with:
-          name: connect-offset-reset-linux-x86_64.zip
+          name: connor-linux-x86_64.zip
           path: target
       - name: Download osx distribution
         uses: actions/download-artifact@v2
         with:
-          name: connect-offset-reset-osx-x86_64.zip
+          name: connor-osx-x86_64.zip
           path: target
       - name: Download windows distribution
         uses: actions/download-artifact@v2
         with:
-          name: connect-offset-reset-windows-x86_64.zip
+          name: connor-windows-x86_64.zip
           path: target
       - name: Setup Java
         uses: actions/setup-java@v2

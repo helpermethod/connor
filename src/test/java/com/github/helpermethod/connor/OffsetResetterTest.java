@@ -1,4 +1,4 @@
-package com.github.helpermethod.connect.offset.reset;
+package com.github.helpermethod.connor;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.MockConsumer;

@@ -25,13 +25,13 @@
       "excludeClasses": "ch.qos.logback.**"
     },
     {
-      "excludeClasses": "com.github.helpermethod.connect.offset.reset.JacksonTest"
+      "excludeClasses": "com.github.helpermethod.connor.JacksonTest"
     },
     {
-      "excludeClasses": "com.github.helpermethod.connect.offset.reset.ConnectOffsetResetTest"
+      "excludeClasses": "com.github.helpermethod.connor.ConnerTest"
     },
     {
-      "excludeClasses": "com.github.helpermethod.connect.offset.reset.OffsetResetterTest"
+      "excludeClasses": "com.github.helpermethod.conner.OffsetResetterTest"
     }
   ]
 }

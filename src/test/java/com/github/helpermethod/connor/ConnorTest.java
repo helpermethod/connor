@@ -1,4 +1,4 @@
-package com.github.helpermethod.connect.offset.reset;
+package com.github.helpermethod.connor;
 
 import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.AdminClientConfig;
@@ -32,7 +32,7 @@ import static org.testcontainers.utility.DockerImageName.parse;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
 @Testcontainers
-class ConnectOffsetResetTest {
+class ConnorTest {
     static final String CONNECT_OFFSETS = "connect-offsets";
 
     @Container
@@ -53,7 +53,7 @@ class ConnectOffsetResetTest {
                     .send(new ProducerRecord<>(CONNECT_OFFSETS, "[\"jdbc-source\", {}]", "{}"))
                     .get(5, SECONDS);
 
-            new CommandLine(new ConnectOffsetReset())
+            new CommandLine(new Connor())
                 .execute(
                     "--bootstrap-servers", kafka.getBootstrapServers(),
                     "--offset-topic", CONNECT_OFFSETS,
