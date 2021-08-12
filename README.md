@@ -30,4 +30,4 @@ scopp install connect-offset-reset
 
 # Usage
 
-:warning: Before deleting the offsets for a source connector, make sure to always stop the source connector first.
+:warning: Before resetting the offsets for a source connector, make sure to always stop the source connector first.
