@@ -28,10 +28,10 @@
       "excludeClasses": "com.github.helpermethod.connor.JacksonTest"
     },
     {
-      "excludeClasses": "com.github.helpermethod.connor.ConnerTest"
+      "excludeClasses": "com.github.helpermethod.connor.ConnorTest"
     },
     {
-      "excludeClasses": "com.github.helpermethod.conner.OffsetResetterTest"
+      "excludeClasses": "com.github.helpermethod.connor.OffsetResetterTest"
     }
   ]
 }
