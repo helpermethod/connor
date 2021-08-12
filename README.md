@@ -1,10 +1,10 @@
-# ConnOR
+# Connor
 
 [![ci](https://github.com/helpermethod/connect-offset-reset/actions/workflows/ci.yml/badge.svg)](https://github.com/helpermethod/connect-offset-reset/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/helpermethod/connect-offset-reset/branch/main/graph/badge.svg?token=niYlJRkALi)](https://codecov.io/gh/helpermethod/connect-offset-reset)
 [![license](https://badgen.net/badge/license/Apache%20Licence%202.0/blue)](https://github.com/helpermethod/connect-offset-reset/blob/main/LICENSE)
 
-ConnOR (short for: **Conn**ect**O**ffset**R**eset) is commandline tool for resetting Kafka Connect source connector offsets.
+Connor (short for: <ins>Conn</ins>ect<ins>O</ins>ffset<ins>R</ins>eset) is commandline tool for resetting Kafka Connect source connector offsets.
 
 # Features
 
