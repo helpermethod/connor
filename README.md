@@ -1,4 +1,4 @@
-# *Conn*ect *O*ffset *R*eset
+# **Conn**(ect) **O**(ffset) **R**(eset)
 
 [![ci](https://github.com/helpermethod/connect-offset-reset/actions/workflows/ci.yml/badge.svg)](https://github.com/helpermethod/connect-offset-reset/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/helpermethod/connect-offset-reset/branch/main/graph/badge.svg?token=niYlJRkALi)](https://codecov.io/gh/helpermethod/connect-offset-reset)
