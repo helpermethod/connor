@@ -36,4 +36,4 @@ scopp install connor
 
 # Usage
 
-:exclamation: You need to stop the source connector *before* resetting its offsets.
+:exclamation: You need to stop the source connector **before** resetting its offsets.
