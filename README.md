@@ -14,6 +14,12 @@ Connor, short for **Conn**ect**O**ffset**R**eset, is a commandline tool for rese
 
 # Installation
 
+## Via SDKMAN!
+
+```sh
+sdk install connor
+```
+
 ## Via Homebrew
 
 ```sh
@@ -30,4 +36,4 @@ scopp install connor
 
 # Usage
 
-:exclamation: Before resetting the offsets for a source connector, stop the source connector first.
+:exclamation: You need to stop the source connector *before* resetting its offsets.
