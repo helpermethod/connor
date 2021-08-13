@@ -14,20 +14,20 @@ Connor, short for **Conn**ect**O**ffset**R**eset, is a commandline tool for rese
 
 # Installation
 
-## Via SDKMAN!
+## Via [SDKMAN!](https://sdkman.io/)
 
 ```sh
 sdk install connor
 ```
 
-## Via Homebrew
+## Via [Homebrew](https://brew.sh/)
 
 ```sh
 brew tap helpermethod/homebrew-tap
 brew install connor
 ```
 
-## Via Scoop
+## Via [Scoop](https://scoop.sh/)
 
 ```sh
 scoop bucket add helpermethod https://github.com/helpermethod/scoop-helpermethod.git
