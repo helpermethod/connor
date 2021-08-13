@@ -18,6 +18,8 @@ distributions:
         platform: osx-x86_64
       - path: target/{{distributionName}}-{{projectVersion}}-windows-x86_64.zip
         platform: windows-x86_64
+    sdkman:
+      active: ALWAYS
     brew:
       active: ALWAYS
       # workaround for https://github.com/jreleaser/jreleaser/issues/337
