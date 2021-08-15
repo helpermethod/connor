@@ -44,17 +44,15 @@ A comma-separated list of Kafka broker URLs, e.g. `localhost:9092`.
 
 ## `--offset-topic`
 
-The name of the internal topic where Kafka Connect stores its source connector offsets. Set in Kafka Connect's
-[Worker Configuration](https://docs.confluent.io/platform/current/connect/references/allconfigs.html#distributed-worker-configuration)
-via the `offset.storage.topic` property.
+The name of the internal topic where Kafka Connect stores its source connector offsets.
 
 ## `--connector-name`
 
-The name of the source connector to reset its offsets for.
+The name of the source connector to reset.
 
 # Usage
 
-Run `connor` with all 3 mandatory arguments, e.g.
+Run `connor` with all 3 mandatory arguments set, e.g.
 
 ```sh
 connor --bootstrap-servers localhost:9092 --offset-topic docker-connect-offsets --connector-name connect-file-pulse-quickstart-log4j
