@@ -36,8 +36,16 @@ scopp install connor
 
 # Usage
 
-ConnOR accepts 3 mandatory commandline arguments:
+ConnOR accepts 3 mandatory command line arguments
 
-* `--bootstrap-servers`: a comma-separated list of broker URLs.
-* `--offset-topic`: The topic where Kafka Connect stores its source connector offsets.
-* `--connector-name`: The name of the source connector to reset the offset for.
+## `--bootstrap-servers`
+
+A comma-separated list of broker URLs.
+
+## `--offset-topic`
+
+The topic where Kafka Connect stores its source connector offsets.
+
+## `--connector-name`
+
+The name of the source connector 
