@@ -18,13 +18,13 @@ import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
-@Command(name = "connor", mixinStandardHelpOptions = true, version = "0.7.0")
+@Command(name = "connor", mixinStandardHelpOptions = true, version = "0.8.0")
 public class Connor implements Runnable {
-    @Option(names = {"-b", "--bootstrap-servers"}, required = true, description = "A comma-separated list of broker urls.")
+    @Option(names = {"-b", "--bootstrap-servers"}, required = true, description = "A comma-separated list of Kafka broker URLs.")
     private String bootstrapServers;
     @Option(names = {"-t", "--offset-topic"}, required = true, description = "The topic where Kafka Connect stores its Source Connector offsets.")
     private String topic;
-    @Option(names = {"-n", "--connector-name"}, required = true, description = "The source connector name for which to reset the offset.")
+    @Option(names = {"-n", "--connector-name"}, required = true, description = "The name of the source connector.")
     private String connector;
 
     @Override
