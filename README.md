@@ -54,7 +54,7 @@ The name of the source connector to reset its offsets for.
 
 # Usage
 
-Run the `connor` command with all 3 mandatory arguments, e.g.
+Run `connor` with all 3 mandatory arguments, e.g.
 
 ```sh
 connor --bootstrap-servers localhost:9092 --offset-topic docker-connect-offsets --connector-name connect-file-pulse-quickstart-log4j
