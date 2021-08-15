@@ -50,7 +50,7 @@ via the `offset.storage.topic` property.
 
 ## `--connector-name`
 
-The name of the source connector you want to reset the offsets for.
+The name of the source connector to reset its offsets for.
 
 # Usage
 
@@ -60,5 +60,7 @@ Run the `connor` command with all 3 arguments set, e.g.
 connor --bootstrap-servers localhost:9092 --offset-topic docker-connect-offsets --connector-name connect-file-pulse-quickstart-log4j
 ```
 
-You should see output similar to this.
+The output should look similar to the following.
 
+![image](https://user-images.githubusercontent.com/1562019/129491845-28a22c89-9752-4a3c-9d77-b26d8e65142d.png)
+>>>>>>> 8cbe9a15db4de867f09cbf5a9c9972c0c14af4c7
