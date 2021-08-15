@@ -40,7 +40,7 @@ ConnOR accepts 3 mandatory command line arguments
 
 ## `--bootstrap-servers`
 
-A comma-separated list of Kafka broker URLs, e.g. `localhost:9092`.
+A comma-separated list of Kafka broker URLs.
 
 ## `--offset-topic`
 
@@ -48,9 +48,11 @@ The name of the internal topic where Kafka Connect stores its source connector o
 
 ## `--connector-name`
 
-The name of the source connector to reset.
+The name of the source connector whose offsets you want to reset.
 
 # Usage
+
+:exclamation: Shut down the source connector before running the following command.
 
 Run `connor` with all 3 mandatory arguments set, e.g.
 
