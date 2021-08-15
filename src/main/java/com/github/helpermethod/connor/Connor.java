@@ -22,7 +22,7 @@ import java.util.concurrent.TimeoutException;
 public class Connor implements Runnable {
     @Option(names = {"-b", "--bootstrap-servers"}, required = true, description = "A comma-separated list of Kafka broker URLs.")
     private String bootstrapServers;
-    @Option(names = {"-t", "--offset-topic"}, required = true, description = "The topic where Kafka Connect stores its Source Connector offsets.")
+    @Option(names = {"-t", "--offset-topic"}, required = true, description = "The name of the internal topic where Kafka Connect stores its Source Connector offsets.")
     private String topic;
     @Option(names = {"-n", "--connector-name"}, required = true, description = "The name of the source connector.")
     private String connector;

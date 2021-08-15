@@ -8,8 +8,8 @@ ConnOR, short for **Conn**ect**O**ffset**R**eset, is a commandline tool for rese
 
 # Features
 
-* :rocket: Fast startup time and low memory footprint  
-* :package: No external dependencies  
+* :rocket: Fast startup time and low memory footprint
+* :package: No external dependencies
 * :rainbow: Colorized output
 
 # Installation
@@ -34,7 +34,7 @@ scoop bucket add helpermethod https://github.com/helpermethod/scoop-helpermethod
 scopp install connor
 ```
 
-# Usage
+# Configuration
 
 ConnOR accepts 3 mandatory command line arguments
 
@@ -44,8 +44,21 @@ A comma-separated list of Kafka broker URLs, e.g. `localhost:9092`.
 
 ## `--offset-topic`
 
-The topic where Kafka Connect stores its source connector offsets.
+The name of the internal topic where Kafka Connect stores its source connector offsets. It is set in Kafka Connect's
+[Worker Configuration](https://docs.confluent.io/platform/current/connect/references/allconfigs.html#distributed-worker-configuration)
+via the `offset.storage.topic` property.
 
 ## `--connector-name`
 
-The name of the source connector you want to reset its offsets for.
+The name of the source connector you want to reset the offsets for.
+
+# Usage
+
+Run the `connor` command with all 3 arguments set, e.g.
+
+```sh
+connor --bootstrap-servers localhost:9092 --offset-topic docker-connect-offsets --connector-name connect-file-pulse-quickstart-log4j
+```
+
+You should see output similar to this.
+
