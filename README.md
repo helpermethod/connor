@@ -4,7 +4,7 @@
 [![codecov](https://codecov.io/gh/helpermethod/connor/branch/main/graph/badge.svg?token=niYlJRkALi)](https://codecov.io/gh/helpermethod/connor)
 [![license](https://badgen.net/badge/license/Apache%20Licence%202.0/blue)](https://github.com/helpermethod/connor/blob/main/LICENSE)
 
-ConnOR, short for **Conn**ect**O**ffset**R**eset, is a commandline tool for resetting Kafka Connect source connector offsets.
+ConnOR, short for **Conn**ect**O**ffset**R**eset, is a command line tool for resetting Kafka Connect source connector offsets.
 
 # Features
 
@@ -44,7 +44,7 @@ A comma-separated list of Kafka broker URLs, e.g. `localhost:9092`.
 
 ## `--offset-topic`
 
-The name of the internal topic where Kafka Connect stores its source connector offsets. It is set in Kafka Connect's
+The name of the internal topic where Kafka Connect stores its source connector offsets. Set in Kafka Connect's
 [Worker Configuration](https://docs.confluent.io/platform/current/connect/references/allconfigs.html#distributed-worker-configuration)
 via the `offset.storage.topic` property.
 
@@ -54,12 +54,12 @@ The name of the source connector to reset its offsets for.
 
 # Usage
 
-Run the `connor` command with all 3 arguments set, e.g.
+Run the `connor` command with all 3 mandatory arguments, e.g.
 
 ```sh
 connor --bootstrap-servers localhost:9092 --offset-topic docker-connect-offsets --connector-name connect-file-pulse-quickstart-log4j
 ```
 
-The output should look similar to the following.
+The output should look similar to this.
 
-![image](https://user-images.githubusercontent.com/1562019/129491845-28a22c89-9752-4a3c-9d77-b26d8e65142d.png)
+![image](https://user-images.githubusercontent.com/1562019/129492170-66765cbe-0634-449e-a64e-2980f8514cd1.png)
