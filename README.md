@@ -36,4 +36,8 @@ scopp install connor
 
 # Usage
 
-:exclamation: You need to stop the source connector **before** resetting its offsets.
+ConnOR accepts 3 mandatory commandline arguments:
+
+* `--bootstrap-servers`: a comma-separated list of broker URLs.
+* `--offset-topic`: The topic where Kafka Connect stores its source connector offsets.
+* `--connector-name`: The name of the source connector to reset the offset for.
