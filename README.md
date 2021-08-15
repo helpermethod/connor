@@ -63,4 +63,3 @@ connor --bootstrap-servers localhost:9092 --offset-topic docker-connect-offsets 
 The output should look similar to the following.
 
 ![image](https://user-images.githubusercontent.com/1562019/129491845-28a22c89-9752-4a3c-9d77-b26d8e65142d.png)
->>>>>>> 8cbe9a15db4de867f09cbf5a9c9972c0c14af4c7
