@@ -49,3 +49,5 @@ The topic where Kafka Connect stores its source connector offsets.
 ## `--connector-name`
 
 The name of the source connector you want to reset its offsets for.
+
+![image](https://user-images.githubusercontent.com/1562019/129491845-28a22c89-9752-4a3c-9d77-b26d8e65142d.png)
