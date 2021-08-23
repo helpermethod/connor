@@ -38,7 +38,7 @@ class OffsetResetterTest {
         consumer.schedulePollTask(() -> consumer.rebalance(beginningOffsets.keySet()));
         var producer = new MockProducer<>(true, new StringSerializer(), new ByteArraySerializer());
 
-        new OffsetResetter(consumer, producer, new ConnectorNameExtractor()).reset(CONNECT_OFFSETS, "jdbc-source");
+        new OffsetResetter(consumer, producer, new ConnectorNameExtractor(), true).reset(CONNECT_OFFSETS, "jdbc-source");
 
         assertThat(producer.history()).isEmpty();
     }
@@ -57,7 +57,7 @@ class OffsetResetterTest {
 
         var producer = new MockProducer<>(true, new StringSerializer(), new ByteArraySerializer());
 
-        new OffsetResetter(consumer, producer, new ConnectorNameExtractor()).reset(CONNECT_OFFSETS, "jdbc-source");
+        new OffsetResetter(consumer, producer, new ConnectorNameExtractor(), true).reset(CONNECT_OFFSETS, "jdbc-source");
 
         assertThat(producer.history())
             .usingRecursiveFieldByFieldElementComparatorOnFields("topic", "partition", "key", "value")
@@ -110,7 +110,7 @@ class OffsetResetterTest {
                 )
             ),
             arguments(
-                Map.of(new TopicPartition(CONNECT_OFFSETS, 0), 0L, new TopicPartition(CONNECT_OFFSETS, 1), 0L),
+                Map.of(new TopicPartition(CONNECT_OFFSETS, 0), 0L),
                 List.of(
                     List.of(new ConsumerRecord<>(CONNECT_OFFSETS, 0, 0, "[\"jdbc-source\", {}]", "{}".getBytes(UTF_8))),
                     List.of(new ConsumerRecord<>(CONNECT_OFFSETS, 0, 1, "[\"jdbc-source\", {}]", "{}".getBytes(UTF_8)))

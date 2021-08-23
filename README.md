@@ -34,7 +34,11 @@ scoop bucket add helpermethod https://github.com/helpermethod/scoop-helpermethod
 scopp install connor
 ```
 
-# Configuration
+# Quickstart
+
+
+
+# Options
 
 ConnOR accepts 3 mandatory command line arguments
 
@@ -49,17 +53,3 @@ The name of the internal topic where Kafka Connect stores its source connector o
 ## `--connector-name`
 
 The name of the source connector whose offsets you want to reset.
-
-# Usage
-
-:exclamation: Shut down the source connector before running the following command.
-
-Run `connor` with all 3 mandatory arguments set, e.g.
-
-```sh
-connor --bootstrap-servers localhost:9092 --offset-topic docker-connect-offsets --connector-name connect-file-pulse-quickstart-log4j
-```
-
-The output should look similar to this.
-
-![image](https://user-images.githubusercontent.com/1562019/129492520-8858de84-243c-418a-939c-03a9666b09f3.png)

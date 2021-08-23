@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
-class JacksonTest {
+class ConnectorNameExtractorTest {
 	@Test
 	void should_extract_connector_name_from_key() throws IOException {
 		var connectorNameExtractor = new ConnectorNameExtractor();
