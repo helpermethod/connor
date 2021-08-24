@@ -13,11 +13,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
-import java.util.stream.Collectors;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static java.util.function.Predicate.not;
 import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toSet;
 import static java.util.stream.Stream.*;
 import static java.util.stream.StreamSupport.stream;
 
@@ -43,7 +43,7 @@ class OffsetResetter {
 
         System.out.printf(Ansi.AUTO.string("Searching for source connector offsets for @|bold,cyan %s|@.%n"), connector);
 
-        var offsets = collectUniqueOffsets(groupOffsetsByKey(connector));
+        var offsets = uniqueOffsets(groupOffsetsByKey(connector));
 
         if (offsets.isEmpty()) {
             System.out.println(Ansi.AUTO.string("@|bold,yellow No offsets found.|@"));
@@ -66,7 +66,6 @@ class OffsetResetter {
         System.out.println(Ansi.AUTO.string("@|bold,green Reset successful.|@"));
     }
 
-
     private Map<String, List<Offset>> groupOffsetsByKey(String connector) {
         return
             generate(() -> consumer.poll(Duration.ofSeconds(5)))
@@ -79,14 +78,14 @@ class OffsetResetter {
                 .collect(groupingBy(Offset::key));
     }
 
-    private Set<Offset> collectUniqueOffsets(Map<String, List<Offset>> offsetsByKey) {
+    private Set<Offset> uniqueOffsets(Map<String, List<Offset>> offsetsByKey) {
         return
             offsetsByKey
                 .entrySet()
                 .stream()
                 .filter(not(entry -> entry.getValue().stream().anyMatch(Offset::tombstone)))
                 .flatMap(entry -> entry.getValue().stream())
-                .collect(Collectors.toSet());
+                .collect(toSet());
     }
 
     private void sendTombstone(String topic, Integer partition,String key) throws InterruptedException, ExecutionException, TimeoutException {

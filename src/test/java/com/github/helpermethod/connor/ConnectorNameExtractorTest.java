@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
@@ -16,5 +16,12 @@ class ConnectorNameExtractorTest {
 		var connectorName = connectorNameExtractor.extract("[\"jdbc-source\", {}]");
 
 		assertThat(connectorName).isEqualTo("jdbc-source");
+	}
+
+	@Test
+	void should_throw_a_runtime_exception_when_the_json_is_malformed() {
+		var connectorNameExtractor = new ConnectorNameExtractor();
+
+		assertThatThrownBy(() -> connectorNameExtractor.extract("\"jdbc-source\", {}")).isInstanceOf(RuntimeException.class);
 	}
 }

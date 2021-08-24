@@ -15,7 +15,7 @@ class ConnectorNameExtractor {
         try {
             return json.arrayOfFrom(String.class, key)[0];
         } catch (IOException e) {
-            throw new AssertionError("Should never happen", e);
+            throw new RuntimeException(e);
         }
     }
 }
