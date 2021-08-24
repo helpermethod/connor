@@ -57,7 +57,8 @@ class ConnorTest {
                 .execute(
                     "--bootstrap-servers", kafka.getBootstrapServers(),
                     "--offset-topic", CONNECT_OFFSETS,
-                    "--connector-name", "jdbc-source"
+                    "--connector-name", "jdbc-source",
+                    "--execute"
                 );
 
             var records = consumer.poll(Duration.ofSeconds(5));

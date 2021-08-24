@@ -31,6 +31,23 @@ class OffsetResetterTest {
     static final String CONNECT_OFFSETS = "connect-offsets";
 
     @Test
+    void shouldn_send_no_tombstone_when_execute_is_set_to_false() throws IOException, ExecutionException, InterruptedException, TimeoutException {
+        var consumer = new MockConsumer<String, byte[]>(OffsetResetStrategy.EARLIEST);
+        var beginningOffsets = Map.of(new TopicPartition(CONNECT_OFFSETS, 0), 0L);
+        consumer.updateBeginningOffsets(beginningOffsets);
+        consumer.schedulePollTask(() -> {
+            consumer.rebalance(beginningOffsets.keySet());
+            consumer.addRecord(new ConsumerRecord<>(CONNECT_OFFSETS, 0, 0, "[\"jdbc-source\", {}]", "{}".getBytes(UTF_8)));
+        });
+
+        var producer = new MockProducer<>(true, new StringSerializer(), new ByteArraySerializer());
+
+        new OffsetResetter(consumer, producer, new ConnectorNameExtractor(), false).reset(CONNECT_OFFSETS, "jdbc-source");
+
+        assertThat(producer.history()).isEmpty();
+    }
+
+    @Test
     void should_send_no_tombstone_when_no_offset_was_found() throws InterruptedException, ExecutionException, TimeoutException, IOException {
         var consumer = new MockConsumer<String, byte[]>(OffsetResetStrategy.EARLIEST);
         var beginningOffsets = Map.of(new TopicPartition(CONNECT_OFFSETS, 0), 0L);
@@ -38,7 +55,7 @@ class OffsetResetterTest {
         consumer.schedulePollTask(() -> consumer.rebalance(beginningOffsets.keySet()));
         var producer = new MockProducer<>(true, new StringSerializer(), new ByteArraySerializer());
 
-        new OffsetResetter(consumer, producer, new ConnectorNameExtractor()).reset(CONNECT_OFFSETS, "jdbc-source");
+        new OffsetResetter(consumer, producer, new ConnectorNameExtractor(), true).reset(CONNECT_OFFSETS, "jdbc-source");
 
         assertThat(producer.history()).isEmpty();
     }
@@ -57,7 +74,7 @@ class OffsetResetterTest {
 
         var producer = new MockProducer<>(true, new StringSerializer(), new ByteArraySerializer());
 
-        new OffsetResetter(consumer, producer, new ConnectorNameExtractor()).reset(CONNECT_OFFSETS, "jdbc-source");
+        new OffsetResetter(consumer, producer, new ConnectorNameExtractor(), true).reset(CONNECT_OFFSETS, "jdbc-source");
 
         assertThat(producer.history())
             .usingRecursiveFieldByFieldElementComparatorOnFields("topic", "partition", "key", "value")
@@ -110,7 +127,7 @@ class OffsetResetterTest {
                 )
             ),
             arguments(
-                Map.of(new TopicPartition(CONNECT_OFFSETS, 0), 0L, new TopicPartition(CONNECT_OFFSETS, 1), 0L),
+                Map.of(new TopicPartition(CONNECT_OFFSETS, 0), 0L),
                 List.of(
                     List.of(new ConsumerRecord<>(CONNECT_OFFSETS, 0, 0, "[\"jdbc-source\", {}]", "{}".getBytes(UTF_8))),
                     List.of(new ConsumerRecord<>(CONNECT_OFFSETS, 0, 1, "[\"jdbc-source\", {}]", "{}".getBytes(UTF_8)))

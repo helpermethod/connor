@@ -18,14 +18,16 @@ import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
-@Command(name = "connor", mixinStandardHelpOptions = true, version = "0.8.0")
+@Command(name = "connor", mixinStandardHelpOptions = true, version = "1.1.0")
 public class Connor implements Runnable {
     @Option(names = {"-b", "--bootstrap-servers"}, required = true, description = "A comma-separated list of Kafka broker URLs.")
     private String bootstrapServers;
     @Option(names = {"-t", "--offset-topic"}, required = true, description = "The name of the internal topic where Kafka Connect stores its Source Connector offsets.")
     private String topic;
-    @Option(names = {"-n", "--connector-name"}, required = true, description = "The name of the source connector.")
+    @Option(names = {"-n", "--connector-name"}, required = true, description = "The name of the source connector whose offsets you want to reset.")
     private String connector;
+    @Option(names = {"-e", "--execute"})
+    private boolean execute;
 
     @Override
     public void run() {
@@ -33,7 +35,7 @@ public class Connor implements Runnable {
             var consumer = createConsumer();
             var producer = createProducer()
         ) {
-            new OffsetResetter(consumer, producer, new ConnectorNameExtractor()).reset(topic, connector);
+            new OffsetResetter(consumer, producer, new ConnectorNameExtractor(), execute).reset(topic, connector);
         } catch (IOException | InterruptedException | ExecutionException | TimeoutException e) {
             throw new RuntimeException(e);
         }
