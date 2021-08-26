@@ -21,7 +21,6 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
-      - name: 
       - name: Set up GraalVM
         uses: helpermethod/graalvm-native-image-toolchain@0.0.1
         with:
