@@ -40,8 +40,6 @@ scopp install connor
 
 # Options
 
-ConnOR accepts 3 mandatory command line arguments
-
 ## `--bootstrap-servers`
 
 A comma-separated list of Kafka broker URLs.
@@ -53,3 +51,6 @@ The name of the internal topic where Kafka Connect stores its source connector o
 ## `--connector-name`
 
 The name of the source connector whose offsets you want to reset.
+
+## `--execute`
+
