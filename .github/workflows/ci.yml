@@ -25,7 +25,7 @@ jobs:
         uses: helpermethod/graalvm-native-image-toolchain@0.0.1
         with:
           graalvm-version: 21.2.0
-          java-versiom: 16
+          java-version: 16
       - name: Install Native Image
         run: gu install native-image
       - name: Cache dependencies
