@@ -21,10 +21,11 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
-      - name: Set up GraalVM
-        uses: DeLaGuardo/setup-graalvm@4.0
+      - name: Set GraalVM Native Image toolchain
+        uses: helpermethod/graalvm-native-image-toolchain@0.0.1
         with:
-          graalvm-version: 21.2.0.java16
+          graalvm-version: 21.2.0
+          java-version: 16
       - name: Install Native Image
         run: gu install native-image
       - name: Cache dependencies
@@ -68,15 +69,11 @@ jobs:
         with:
           name: native-image-configuration
           path: target/classes/META-INF/native-image
-      - name: Set up GraalVM
-        uses: DeLaGuardo/setup-graalvm@4.0
+      - name: Set GraalVM Native Image toolchain
+        uses: helpermethod/graalvm-native-image-toolchain@0.0.1
         with:
-          graalvm-version: 21.1.0.java16
-      - name: Install Native Image
-        run: ${{ matrix.gu-binary }} install native-image
-      - name: Setup Developer Command Prompt
-        if: ${{ runner.os == 'Windows' }}
-        uses: ilammy/msvc-dev-cmd@v1
+          graalvm-version: 21.2.0
+          java-versiom: 16
       - name: Cache dependencies
         uses: actions/cache@v2
         with:
