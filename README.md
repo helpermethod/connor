@@ -1,7 +1,7 @@
 # ConnOR
 
 [![ci](https://github.com/helpermethod/connor/actions/workflows/ci.yml/badge.svg)](https://github.com/helpermethod/connor/actions/workflows/ci.yml)
-[![CodeFactor](https://www.codefactor.io/repository/github/helpermethod/connect-offset-reset/badge)](https://www.codefactor.io/repository/github/helpermethod/connect-offset-reset)
+[![codefactor](https://www.codefactor.io/repository/github/helpermethod/connor/badge)](https://www.codefactor.io/repository/github/helpermethod/connor)
 [![codecov](https://codecov.io/gh/helpermethod/connor/branch/main/graph/badge.svg?token=niYlJRkALi)](https://codecov.io/gh/helpermethod/connor)
 [![license](https://badgen.net/badge/license/Apache%20Licence%202.0/blue)](https://github.com/helpermethod/connor/blob/main/LICENSE)
 
