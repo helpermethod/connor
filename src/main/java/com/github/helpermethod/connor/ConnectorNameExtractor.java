@@ -1,10 +1,10 @@
 package com.github.helpermethod.connor;
 
 import com.fasterxml.jackson.jr.ob.JSON;
-
 import java.io.IOException;
 
 class ConnectorNameExtractor {
+
     private final JSON json;
 
     ConnectorNameExtractor() {
