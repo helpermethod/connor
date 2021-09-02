@@ -180,6 +180,26 @@
                     </buildArgs>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
+                <version>2.12.3</version>
+                <configuration>
+                    <java>
+                        <prettier>
+                            <devDependencies>
+                                <prettier>2.3.2</prettier>
+                                <prettier-plugin-java>1.4.0</prettier-plugin-java>
+                            </devDependencies>
+                            <config>
+                                <printWidth>120</printWidth>
+                                <tabWidth>4</tabWidth>
+                                <parser>java</parser>
+                            </config>
+                        </prettier>
+                    </java>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
