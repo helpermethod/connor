@@ -1,5 +1,15 @@
 package com.github.helpermethod.connor;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
+import static org.testcontainers.utility.DockerImageName.parse;
+
+import java.time.Duration;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
 import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;
@@ -19,45 +29,34 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import picocli.CommandLine;
 
-import java.time.Duration;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeoutException;
-
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
-import static org.testcontainers.utility.DockerImageName.parse;
-
 @DisplayNameGeneration(ReplaceUnderscores.class)
 @Testcontainers
 class ConnorTest {
+
     static final String CONNECT_OFFSETS = "connect-offsets";
 
     @Container
-    KafkaContainer kafka =
-        new KafkaContainer(parse("confluentinc/cp-kafka:6.2.0"))
-            .withEnv("KAFKA_AUTO_CREATE_TOPICS_ENABLE", "false");
+    KafkaContainer kafka = new KafkaContainer(parse("confluentinc/cp-kafka:6.2.0"))
+        .withEnv("KAFKA_AUTO_CREATE_TOPICS_ENABLE", "false");
 
     @Test
-    void should_send_a_tombstone_to_the_correct_partition() throws InterruptedException, ExecutionException, TimeoutException {
+    void should_send_a_tombstone_to_the_correct_partition()
+        throws InterruptedException, ExecutionException, TimeoutException {
         createConnectOffsetsTopic();
 
-        try (
-            var consumer = createConnectOffsetsConsumer();
-            var producer = createProducer()
-        ) {
-            var metadata =
-                producer
-                    .send(new ProducerRecord<>(CONNECT_OFFSETS, "[\"jdbc-source\", {}]", "{}"))
-                    .get(5, SECONDS);
+        try (var consumer = createConnectOffsetsConsumer(); var producer = createProducer()) {
+            var metadata = producer
+                .send(new ProducerRecord<>(CONNECT_OFFSETS, "[\"jdbc-source\", {}]", "{}"))
+                .get(5, SECONDS);
 
             new CommandLine(new Connor())
                 .execute(
-                    "--bootstrap-servers", kafka.getBootstrapServers(),
-                    "--offset-topic", CONNECT_OFFSETS,
-                    "--connector-name", "jdbc-source",
+                    "--bootstrap-servers",
+                    kafka.getBootstrapServers(),
+                    "--offset-topic",
+                    CONNECT_OFFSETS,
+                    "--connector-name",
+                    "jdbc-source",
                     "--execute"
                 );
 
@@ -65,24 +64,27 @@ class ConnorTest {
 
             assertThat(records.records(new TopicPartition(CONNECT_OFFSETS, metadata.partition())))
                 .extracting("key", "value")
-                .containsExactly(
-                    tuple("[\"jdbc-source\", {}]", "{}"),
-                    tuple("[\"jdbc-source\", {}]", null)
-                );
+                .containsExactly(tuple("[\"jdbc-source\", {}]", "{}"), tuple("[\"jdbc-source\", {}]", null));
         }
     }
 
     private KafkaProducer<String, String> createProducer() {
-        var producerConfig = Map.<String, Object>of(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafka.getBootstrapServers());
+        var producerConfig = Map.<String, Object>of(
+            ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
+            kafka.getBootstrapServers()
+        );
 
         return new KafkaProducer<>(producerConfig, new StringSerializer(), new StringSerializer());
     }
 
     private KafkaConsumer<String, String> createConnectOffsetsConsumer() {
         var consumerConfig = Map.<String, Object>of(
-            ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafka.getBootstrapServers(),
-            ConsumerConfig.GROUP_ID_CONFIG, "test",
-            ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest"
+            ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
+            kafka.getBootstrapServers(),
+            ConsumerConfig.GROUP_ID_CONFIG,
+            "test",
+            ConsumerConfig.AUTO_OFFSET_RESET_CONFIG,
+            "earliest"
         );
         var consumer = new KafkaConsumer<>(consumerConfig, new StringDeserializer(), new StringDeserializer());
         consumer.subscribe(List.of(CONNECT_OFFSETS));
@@ -91,11 +93,12 @@ class ConnorTest {
     }
 
     private void createConnectOffsetsTopic() throws InterruptedException, ExecutionException, TimeoutException {
-        try (var adminClient = AdminClient.create(Map.of(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, kafka.getBootstrapServers()))) {
-            adminClient
-                .createTopics(List.of(new NewTopic(CONNECT_OFFSETS, 25, (short) 1)))
-                .all()
-                .get(5, SECONDS);
+        try (
+            var adminClient = AdminClient.create(
+                Map.of(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, kafka.getBootstrapServers())
+            )
+        ) {
+            adminClient.createTopics(List.of(new NewTopic(CONNECT_OFFSETS, 25, (short) 1))).all().get(5, SECONDS);
         }
     }
 }
