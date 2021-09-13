@@ -52,13 +52,10 @@ jobs:
         include:
           - os: ubuntu-20.04
             target: linux
-            gu-binary: gu
           - os: macos-10.15
             target: osx
-            gu-binary: gu
           - os: windows-2019
             target: windows
-            gu-binary: gu.cmd
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
