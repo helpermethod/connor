@@ -44,7 +44,7 @@ class OffsetResetter {
         consumer.subscribe(List.of(topic));
 
         if (!execute) {
-            System.out.println(Ansi.AUTO.string("@|bold, yellow Performing dry run.|@%n"));
+            System.out.println(Ansi.AUTO.string("@|bold,yellow Performing dry run.|@"));
         }
 
         System.out.printf(
