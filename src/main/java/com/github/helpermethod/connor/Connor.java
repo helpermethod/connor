@@ -41,7 +41,10 @@ public class Connor implements Runnable {
     )
     private String connector;
 
-    @Option(names = { "-e", "--execute" })
+    @Option(
+        names = { "-e", "--execute" },
+        description = "Executes the reset. Without this flag, a dry run is performed."
+    )
     private boolean execute;
 
     @Override
