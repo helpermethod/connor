@@ -50,4 +50,4 @@ The name of the source connector whose offsets you want to reset.
 
 ### `--execute`
 
-Executes the reset. Without this flag, a dry run is performed. 
+Executes the reset. Without the flag, a dry run is performed. 
