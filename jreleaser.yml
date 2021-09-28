@@ -22,9 +22,6 @@ distributions:
       active: ALWAYS
     brew:
       active: ALWAYS
-      # workaround for https://github.com/jreleaser/jreleaser/issues/337
-      cask:
-        enabled: false
     scoop:
       active: ALWAYS
 
