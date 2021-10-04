@@ -1,5 +1,6 @@
 package com.github.helpermethod.connor;
 
+import static java.lang.System.out;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static java.util.function.Predicate.not;
 import static java.util.stream.Collectors.groupingBy;
@@ -44,10 +45,10 @@ class OffsetResetter {
         consumer.subscribe(List.of(topic));
 
         if (!execute) {
-            System.out.println(Ansi.AUTO.string("@|bold,yellow Performing dry run.|@"));
+            out.println(Ansi.AUTO.string("@|bold,yellow Performing dry run.|@"));
         }
 
-        System.out.printf(
+        out.printf(
             Ansi.AUTO.string("Searching for source connector offsets for @|bold,cyan %s|@.%n"),
             connector
         );
@@ -55,19 +56,19 @@ class OffsetResetter {
         var offsets = uniqueOffsets(groupOffsetsByKey(connector));
 
         if (offsets.isEmpty()) {
-            System.out.println(Ansi.AUTO.string("@|bold,yellow No offsets found.|@"));
+            out.println(Ansi.AUTO.string("@|bold,yellow No offsets found.|@"));
 
             return;
         }
 
-        System.out.printf(Ansi.AUTO.string("@|bold,green %s|@ offset(s) found.%n"), offsets.size());
+        out.printf(Ansi.AUTO.string("@|bold,green %s|@ offset(s) found.%n"), offsets.size());
 
         if (!execute) {
             return;
         }
 
         for (var offset : offsets) {
-            System.out.printf(
+            out.printf(
                 Ansi.AUTO.string("Sending tombstone to topic @|bold,cyan %s|@, partition @|bold,cyan %s.|@%n"),
                 topic,
                 offset.partition()
@@ -76,7 +77,7 @@ class OffsetResetter {
             sendTombstone(topic, offset.partition(), offset.key());
         }
 
-        System.out.println(Ansi.AUTO.string("@|bold,green Reset successful.|@"));
+        out.println(Ansi.AUTO.string("@|bold,green Reset successful.|@"));
     }
 
     private Map<String, List<Offset>> groupOffsetsByKey(String connector) {
