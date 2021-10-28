@@ -8,26 +8,26 @@ ConnOR, short for **Conn**ect**O**ffset**R**eset, is a command line tool for res
 
 ## Features
 
-* :rocket: Fast startup time and low memory footprint
+* :rocket: Fast startup and low memory footprint
 * :package: No external dependencies
 * :rainbow: Colorized output
 
 ## Installation
 
-### Via [SDKMAN!](https://sdkman.io/)
+### [SDKMAN!](https://sdkman.io/)
 
 ```sh
 sdk install connor
 ```
 
-### Via [Homebrew](https://brew.sh/)
+### [Homebrew](https://brew.sh/)
 
 ```sh
 brew tap helpermethod/homebrew-tap
 brew install connor
 ```
 
-### Via [Scoop](https://scoop.sh/)
+### [Scoop](https://scoop.sh/)
 
 ```sh
 scoop bucket add helpermethod https://github.com/helpermethod/scoop-helpermethod.git
