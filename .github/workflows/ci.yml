@@ -110,8 +110,8 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v2
         with:
-          distribution: adopt
-          java-version: 16
+          distribution: temurin
+          java-version: 17
       - name: Release
         uses: jreleaser/release-action@1.4.0
         with:
