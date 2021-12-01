@@ -149,14 +149,6 @@ class OffsetResetterTest {
                     new ProducerRecord<>(CONNECT_OFFSETS, 0, "[\"jdbc-source\", {}]", null),
                     new ProducerRecord<>(CONNECT_OFFSETS, 1, "[\"jdbc-source\", {}]", null)
                 )
-            ),
-            arguments(
-                Map.of(new TopicPartition(CONNECT_OFFSETS, 0), 0L),
-                List.of(
-                    List.of(new ConsumerRecord<>(CONNECT_OFFSETS, 0, 0, "[\"jdbc-source\", {}]", "{}")),
-                    List.of(new ConsumerRecord<>(CONNECT_OFFSETS, 0, 1, "[\"jdbc-source\", {}]", null))
-                ),
-                List.of()
             )
         );
     }

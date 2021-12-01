@@ -3,16 +3,13 @@ package com.github.helpermethod.connor;
 import static java.lang.System.out;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static java.util.function.Predicate.not;
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toSet;
-import static java.util.stream.Stream.*;
+import static java.util.stream.Collectors.toUnmodifiableSet;
+import static java.util.stream.Stream.generate;
 import static java.util.stream.StreamSupport.stream;
 
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 import org.apache.kafka.clients.consumer.Consumer;
@@ -48,12 +45,18 @@ class OffsetResetter {
             out.println(Ansi.AUTO.string("@|bold,yellow Performing dry run.|@"));
         }
 
-        out.printf(
-            Ansi.AUTO.string("Searching for source connector offsets for @|bold,cyan %s|@.%n"),
-            connector
-        );
+        out.printf(Ansi.AUTO.string("Searching for source connector offsets for @|bold,cyan %s|@.%n"), connector);
 
-        var offsets = uniqueOffsets(groupOffsetsByKey(connector));
+        record Offset(int partition, String key) {}
+
+        var offsets = generate(() -> consumer.poll(Duration.ofSeconds(5)))
+            .takeWhile(not(ConsumerRecords::isEmpty))
+            .flatMap(records ->
+                stream(records.spliterator(), false)
+                    .filter(record -> connectorNameExtractor.extract(record.key()).equals(connector))
+            )
+            .map(record -> new Offset(record.partition(), record.key()))
+            .collect(toUnmodifiableSet());
 
         if (offsets.isEmpty()) {
             out.println(Ansi.AUTO.string("@|bold,yellow No offsets found.|@"));
@@ -80,30 +83,8 @@ class OffsetResetter {
         out.println(Ansi.AUTO.string("@|bold,green Reset successful.|@"));
     }
 
-    private Map<String, List<Offset>> groupOffsetsByKey(String connector) {
-        return generate(() -> consumer.poll(Duration.ofSeconds(5)))
-            .takeWhile(not(ConsumerRecords::isEmpty))
-            .flatMap(records ->
-                stream(records.spliterator(), false)
-                    .filter(record -> connectorNameExtractor.extract(record.key()).equals(connector))
-            )
-            .map(record -> new Offset(record.partition(), record.key(), record.value() == null))
-            .collect(groupingBy(Offset::key));
-    }
-
-    private Set<Offset> uniqueOffsets(Map<String, List<Offset>> offsetsByKey) {
-        return offsetsByKey
-            .entrySet()
-            .stream()
-            .filter(not(entry -> entry.getValue().stream().anyMatch(Offset::tombstone)))
-            .flatMap(entry -> entry.getValue().stream())
-            .collect(toSet());
-    }
-
     private void sendTombstone(String topic, Integer partition, String key)
         throws InterruptedException, ExecutionException, TimeoutException {
         producer.send(new ProducerRecord<>(topic, partition, key, null)).get(5, SECONDS);
     }
-
-    private record Offset(Integer partition, String key, boolean tombstone) {}
 }

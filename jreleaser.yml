@@ -22,6 +22,8 @@ distributions:
       active: ALWAYS
     brew:
       active: ALWAYS
+    macports:
+      active: ALWAYS
     scoop:
       active: ALWAYS
 
