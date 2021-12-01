@@ -68,7 +68,7 @@ jobs:
         uses: helpermethod/graalvm-native-image-toolchain@0.0.1
         with:
           graalvm-version: 21.3.0
-          java-versiom: 17
+          java-version: 17
       - name: Cache dependencies
         uses: actions/cache@v2
         with:

@@ -30,7 +30,7 @@ public class Connor implements Runnable {
     @Option(
         names = { "-t", "--offset-topic" },
         required = true,
-        description = "The name of the internal topic where Kafka Connect stores its Source Connector offsets."
+        description = "The name of the internal topic where Kafka Connect stores its source connector offsets."
     )
     private String topic;
 
@@ -43,7 +43,7 @@ public class Connor implements Runnable {
 
     @Option(
         names = { "-e", "--execute" },
-        description = "Executes the reset. Without this flag, a dry run is performed."
+        description = "Performs the reset."
     )
     private boolean execute;
 
