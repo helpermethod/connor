@@ -43,7 +43,7 @@ public class Connor implements Runnable {
 
     @Option(
         names = { "-e", "--execute" },
-        description = "Performs the reset."
+        description = "Executes the reset."
     )
     private boolean execute;
 
