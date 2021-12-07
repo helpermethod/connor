@@ -115,7 +115,7 @@ jobs:
       - name: Release
         uses: jreleaser/release-action@1.4.0
         with:
-          version: early-access
+          version: 0.9.1
         env:
           JRELEASER_GITHUB_TOKEN: ${{ secrets.GH_PAT }}
           JRELEASER_PROJECT_VERSION: ${{ github.event.inputs.version }}
