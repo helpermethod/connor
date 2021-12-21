@@ -22,7 +22,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
       - name: Set up GraalVM Native Image toolchain
-        uses: helpermethod/graalvm-native-image-toolchain@0.0.1
+        uses: helpermethod/graalvm-native-image-toolchain@0.0.2
         with:
           graalvm-version: 21.3.0
           java-version: 17
@@ -65,7 +65,7 @@ jobs:
           name: native-image-configuration
           path: target/classes/META-INF/native-image
       - name: Set up GraalVM Native Image toolchain
-        uses: helpermethod/graalvm-native-image-toolchain@0.0.1
+        uses: helpermethod/graalvm-native-image-toolchain@0.0.2
         with:
           graalvm-version: 21.3.0
           java-version: 17
