@@ -22,6 +22,7 @@ distributions:
       active: ALWAYS
     brew:
       active: ALWAYS
+      multiPlatform: true
     macports:
       active: ALWAYS
     scoop:
