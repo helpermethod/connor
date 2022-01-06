@@ -31,3 +31,9 @@ distributions:
 announce:
   twitter:
     active: ALWAYS
+
+release:
+  github:
+    changelog:
+      formatted: ALWAYS
+      preset: conventional-commits
