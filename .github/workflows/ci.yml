@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Check out repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set up GraalVM and Native Image
         uses: graalvm/setup-graalvm@v1
         with:
@@ -60,7 +60,7 @@ jobs:
             target: windows
     steps:
       - name: Check out repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Download native-image configuration files
         uses: actions/download-artifact@v2
         with:
@@ -93,7 +93,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Download linux distribution
