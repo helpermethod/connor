@@ -41,7 +41,7 @@ jobs:
         uses: codecov/codecov-action@v3
       - name: Upload native-image configuration files
         if: github.event_name == 'workflow_dispatch'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: native-image-configuration
           path: target/classes/META-INF/native-image
@@ -84,7 +84,7 @@ jobs:
         run: |
           ./mvnw --batch-mode --activate-profiles assemble '-Drevision=${{ github.event.inputs.version }}' verify
       - name: Upload distribution
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: connor-${{ matrix.target }}-x86_64.zip
           path: target/connor-*.zip
