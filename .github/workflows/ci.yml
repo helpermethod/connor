@@ -62,7 +62,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
       - name: Download native-image configuration files
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: native-image-configuration
           path: target/classes/META-INF/native-image
@@ -97,17 +97,17 @@ jobs:
         with:
           fetch-depth: 0
       - name: Download linux distribution
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: connor-linux-x86_64.zip
           path: target
       - name: Download osx distribution
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: connor-osx-x86_64.zip
           path: target
       - name: Download windows distribution
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: connor-windows-x86_64.zip
           path: target
