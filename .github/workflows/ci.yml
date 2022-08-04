@@ -56,7 +56,7 @@ jobs:
             target: linux
           - os: macos-10.15
             target: osx
-          - os: windows-2019
+          - os: windows-2022
             target: windows
     steps:
       - name: Check out repository
