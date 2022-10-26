@@ -101,7 +101,7 @@ jobs:
       - name: Release
         uses: jreleaser/release-action@2.2.0
         with:
-          version: 1.1.0
+          version: 1.2.0
           setup-java: true
         env:
           JRELEASER_GITHUB_TOKEN: ${{ secrets.GH_PAT }}
