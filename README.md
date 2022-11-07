@@ -6,7 +6,7 @@
 
 ConnOR, short for **Conn**ect**O**ffset**R**eset, is a command line tool for resetting Kafka Connect source connector offsets.
 
-## Features
+## :sparkles: Features
 
 * :rocket: Fast startup and low memory footprint
 * :package: No external dependencies
