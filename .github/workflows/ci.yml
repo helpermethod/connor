@@ -30,7 +30,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           cache: maven
       - name: Build
-        run: ./mvnw --batch-mode verify
+        run: ./mvnw --batch-mode -Dstyle.color=always verify
       - name: Upload code coverage
         uses: codecov/codecov-action@v3
       - name: Upload native-image configuration files
@@ -69,7 +69,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build
         run: |
-          ./mvnw --batch-mode --activate-profiles assemble '-Drevision=${{ github.event.inputs.version }}' verify
+          ./mvnw --batch-mode -Dstyle.color=always --activate-profiles assemble '-Drevision=${{ github.event.inputs.version }}' verify
       - name: Upload distribution
         uses: actions/upload-artifact@v3
         with:
