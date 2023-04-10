@@ -9,7 +9,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>19</maven.compiler.release>
-        <picocli.version>4.7.1</picocli.version>
+        <picocli.version>4.7.2</picocli.version>
         <jacoco.version>0.8.9</jacoco.version>
         <revision>1.0.0-SNAPSHOT</revision>
     </properties>
