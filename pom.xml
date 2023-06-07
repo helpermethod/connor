@@ -120,7 +120,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.1.2</version>
                 <configuration>
                     <argLine>
                         -agentlib:native-image-agent=access-filter-file=${project.build.outputDirectory}/access-filter.json,config-output-dir=${project.build.outputDirectory}/META-INF/native-image
